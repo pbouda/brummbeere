@@ -8,3 +8,6 @@ INCLUDEPATH += ../lib
 LIBS += -L../lib/debug -ltwomusic
 
 SOURCES += testowncloudclient.cpp
+
+HEADERS += \
+    config.h

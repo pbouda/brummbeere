@@ -1,16 +1,21 @@
 #include <QtTest/QtTest>
 #include "owncloudclient.h"
+#include "config.h"
 
 class TestOwncloudClient: public QObject
 {
     Q_OBJECT
 private slots:
-    void list();
+    void mkdir();
 };
 
-void TestOwncloudClient::list()
+void TestOwncloudClient::mkdir()
 {
-    OwncloudClient *client = new OwncloudClient();
+    OwncloudClient *client = new OwncloudClient(
+                OWNCLOUD_URL,
+                OWNCLOUD_LOGIN,
+                OWNCLOUD_PASSWORD);
+    client->mkdir(OWNCLOUD_TESTROOT);
     //QString str = "Hello";
     //QCOMPARE(str.toUpper(), QString("HELLO"));
 }

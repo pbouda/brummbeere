@@ -3,12 +3,19 @@
 
 #include <QObject>
 
+class QNetworkReply;
+
 class OwncloudClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit OwncloudClient(QObject *parent = 0);
+    explicit OwncloudClient(QString owncloudUrl,
+                            QString owncloudLogin,
+                            QString owncoudPassword,
+                            QObject *parent = 0);
     ~OwncloudClient();
+
+    QNetworkReply* mkdir(QString path);
 
 signals:
 
