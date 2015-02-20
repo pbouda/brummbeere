@@ -2,7 +2,9 @@ TEMPLATE = lib
 
 QT += network xml
 
-TARGET = twomusic-lib
+TARGET = twomusic
+
+CONFIG += staticlib
 
 SOURCES += \
     owncloudclient.cpp \

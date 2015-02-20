@@ -1,16 +1,18 @@
 #include <QtTest/QtTest>
+#include "owncloudclient.h"
 
 class TestOwncloudClient: public QObject
 {
     Q_OBJECT
 private slots:
-    void toUpper();
+    void list();
 };
 
-void TestOwncloudClient::toUpper()
+void TestOwncloudClient::list()
 {
-    QString str = "Hello";
-    QCOMPARE(str.toUpper(), QString("HELLO"));
+    OwncloudClient *client = new OwncloudClient();
+    //QString str = "Hello";
+    //QCOMPARE(str.toUpper(), QString("HELLO"));
 }
 
 QTEST_MAIN(TestOwncloudClient)

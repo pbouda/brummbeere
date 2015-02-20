@@ -1,14 +1,15 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+QT += qml quick widgets xml
 
-TARGET = twomusic-app
+TARGET = twomusic
 
 SOURCES += main.cpp
 
 #DEPENDPATH += ../lib
 INCLUDEPATH += ../lib
-LIBS += ../lib/libtwomusic-lib.dylib
+#LIBS += ../lib/debug/twomusic-lib.dll
+LIBS += -L../lib/debug -ltwomusic
 #PRE_TARGETDEPS += ../lib/libtwomusic-lib.dylib
 
 RESOURCES += qml.qrc
