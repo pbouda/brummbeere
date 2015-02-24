@@ -5,7 +5,7 @@ QT += testlib
 CONFIG += testcase
 
 INCLUDEPATH += ../lib
-LIBS += -L../lib/debug -ltwomusic
+LIBS += -L../lib -ltwomusic
 
 SOURCES += testowncloudclient.cpp
 

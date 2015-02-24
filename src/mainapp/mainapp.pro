@@ -9,7 +9,7 @@ SOURCES += main.cpp
 #DEPENDPATH += ../lib
 INCLUDEPATH += ../lib
 #LIBS += ../lib/debug/twomusic-lib.dll
-LIBS += -L../lib/debug -ltwomusic
+LIBS += -L../lib -ltwomusic
 #PRE_TARGETDEPS += ../lib/libtwomusic-lib.dylib
 
 RESOURCES += qml.qrc
