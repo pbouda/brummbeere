@@ -5,10 +5,15 @@
 
 OwncloudClient::OwncloudClient(QString owncloudUrl,
                                QString owncloudLogin,
-                               QString owncoudPassword,
+                               QString owncloudPassword,
                                QObject *parent) : QObject(parent)
 {
-
+    mDavUrl = QString(owncloudUrl);
+    if (!mDavUrl.endsWith("/"))
+        mDavUrl += "/";
+    mDavUrl = mDavUrl + "remote.php/webdav";
+    mDavClient = new QWebDAV(this);
+    mDavClient->initialize(mDavUrl, owncloudLogin, owncloudPassword);
 }
 
 OwncloudClient::~OwncloudClient()
@@ -16,7 +21,11 @@ OwncloudClient::~OwncloudClient()
 
 }
 
-QNetworkReply* OwncloudClient::mkdir(QString path)
+QStringList OwncloudClient::list(QString path)
 {
-    return NULL;
+    QNetworkReply* reply = mDavClient->list(path);
+    QString listContent = QString::fromUtf8(reply->readAll());
+    qWarning() << listContent;
+    QStringList ret;
+    return ret;
 }

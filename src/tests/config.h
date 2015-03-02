@@ -4,7 +4,7 @@
 #include <QString>
 
 // Change this to your ownCloud's URL
-const QString OWNCLOUD_URL = "http://127.0.0.1";
+const QString OWNCLOUD_URL = "https://localhost";
 // ownCloud login
 const QString OWNCLOUD_LOGIN = "test";
 // ownCloud password

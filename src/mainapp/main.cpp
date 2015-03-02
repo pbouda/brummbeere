@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     QWebDAV *dav = new QWebDAV();
-    dav->initialize("URL", "user", "pass");
+    dav->initialize("https://localhost/remote.php/webdav", "test", "password");
     dav->list("/");
 
     QApplication app(argc, argv);

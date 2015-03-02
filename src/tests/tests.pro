@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += testlib
+QT += testlib network xml
 
 CONFIG += testcase
 

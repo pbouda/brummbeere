@@ -17,7 +17,7 @@
  *    along with owncloud_sync.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-#include "QWebDAV.h"
+#include "qwebdav.h"
 
 // Qt Standard Includes
 #include <QDebug>
