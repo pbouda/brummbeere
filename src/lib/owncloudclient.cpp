@@ -13,6 +13,13 @@ OwncloudClient::OwncloudClient(QString owncloudUrl,
         mDavUrl += "/";
     mDavUrl = mDavUrl + "remote.php/webdav";
     mDavClient = new QWebDAV(this);
+
+    // Connect to QWebDAV signals
+   connect(mDavClient,SIGNAL(directoryListingError(QString)),
+   this, SLOT(directoryListingError(QString)));
+   connect(mDavClient,SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
+   this, SLOT(processDirectoryListing(QList<QWebDAV::FileInfo>)));
+
     mDavClient->initialize(mDavUrl, owncloudLogin, owncloudPassword);
 }
 
@@ -21,11 +28,16 @@ OwncloudClient::~OwncloudClient()
 
 }
 
-QStringList OwncloudClient::list(QString path)
+QNetworkReply* OwncloudClient::list(QString path)
 {
-    QNetworkReply* reply = mDavClient->list(path);
-    QString listContent = QString::fromUtf8(reply->readAll());
-    qWarning() << listContent;
-    QStringList ret;
-    return ret;
+    QNetworkReply* reply = mDavClient->list(mDavUrl + path);
+    return reply;
+}
+
+void OwncloudClient::directoryListingError(QString url)
+{
+}
+
+void OwncloudClient::processDirectoryListing(QList<QWebDAV::FileInfo> fileInfo)
+{
 }

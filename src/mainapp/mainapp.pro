@@ -4,13 +4,11 @@ QT += qml quick widgets xml
 
 TARGET = twomusic
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    filemodel.cpp
 
-#DEPENDPATH += ../lib
 INCLUDEPATH += ../lib
-#LIBS += ../lib/debug/twomusic-lib.dll
 LIBS += -L../lib -ltwomusic
-#PRE_TARGETDEPS += ../lib/libtwomusic-lib.dylib
 
 RESOURCES += qml.qrc
 
@@ -19,3 +17,6 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+HEADERS += \
+    filemodel.h
