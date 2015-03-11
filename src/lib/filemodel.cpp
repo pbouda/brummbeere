@@ -55,5 +55,10 @@ QHash<int, QByteArray> FileModel::roleNames() const {
 
 void FileModel::addDavFiles(QList<QWebDAV::FileInfo> fileInfo)
 {
-    qDebug() << fileInfo.length();
+    for (int i = 0; i < fileInfo.size(); i++ ) {
+        QString icon = "file.png";
+        if (fileInfo[i].type != "directory")
+            icon = "directory.png";
+        addFile(File(fileInfo[i].fileName, icon));
+    }
 }

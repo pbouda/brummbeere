@@ -338,7 +338,7 @@ void QWebDAV::dirList(QString dir)
 
 void QWebDAV::processDirList(QByteArray xml, QString url)
 {
-    qDebug() << "\n\n\n" << xml;
+    //qDebug() << "\n\n\n" << xml;
     QList<QWebDAV::FileInfo> list;
     QDomDocument domDocument;
     QString errorStr;
@@ -386,9 +386,10 @@ void QWebDAV::processDirList(QByteArray xml, QString url)
                         size = prop.text();
                     } else if ( prop.tagName() == "quota-available-bytes") {
                         available = prop.text();
-                    } else if ( prop.tagName() == "resourcetype") {
-                        QDomElement resourseType = prop.firstChildElement("");
-                        type = resourseType.tagName();
+                    } else if ( prop.tagName() == "getcontenttype") {
+                        type = prop.text();
+                        //QDomElement resourseType = prop.firstChildElement("");
+                        //type = resourseType.tagName();
                     } else if ( prop.tagName() == "lockdiscovery") {
                         if(prop.text() == "" ) { // Not locked
                             locked = false;
@@ -409,13 +410,10 @@ void QWebDAV::processDirList(QByteArray xml, QString url)
             }
             child = child.nextSiblingElement();
         }
-//        qDebug() << "Name: " << name << "\nSize: " << size << "\nLastModified: "
-//                 << last << "\nSizeAvailable: " << available << "\nType: "
-//                 << type << "\n";
+
         // Filter out the requested directory from this list
-        //qDebug() << "Type: " << type << "Name: " << name << " URL: " << url;
         name = QUrl::fromPercentEncoding(name.toLatin1());
-        if( !(type == "collection" && name == url) ) {
+        if( !(name == url) ) {
             // Filter out the pathname from the filename and decode URL
             name.replace(mPathFilter,"");
 
@@ -426,15 +424,17 @@ void QWebDAV::processDirList(QByteArray xml, QString url)
                                                    "ddd dd MMM yyyy HH:mm:ss");
             date.setTimeSpec(Qt::UTC);
             last = QString("%1").arg(date.toMSecsSinceEpoch());
+
+            // is it a directory?
+            if ((type.isEmpty()) && (size.isEmpty()) && name.endsWith("/"))
+                type = "directory";
+
             list.append(QWebDAV::FileInfo(name,last,size.toLongLong(),
                                           available.toLongLong(),type));
         }
         name = size = last = type = available = "";
         response = response.nextSiblingElement();
     }
-    //for(int i = 0; i < list.size(); i++ ) {
-    //    list[i].print();
-    //}
 
     // Let whoever is listening know that we have their stuff ready!
     emit directoryListingReady(list);

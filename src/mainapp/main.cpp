@@ -17,9 +17,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     FileModel model;
-    //model.addFile(File("Music", "folder.jpg"));
-    //model.addFile(File("Documents", "folder.jpg"));
-    //model.addFile(File("tst.mp3", "file.jpg"));
 
     QString mDavUrl = DAV_URL;
     if (!mDavUrl.endsWith("/"))
@@ -33,11 +30,13 @@ int main(int argc, char *argv[])
     QObject::connect(mDavClient, SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
         &model, SLOT(addDavFiles(QList<QWebDAV::FileInfo>)));
 
-    mDavClient->initialize(mDavUrl, DAV_USER, DAV_PASS);
+    mDavClient->initialize(mDavUrl, DAV_USER, DAV_PASS, "/remote.php/webdav");
     mDavClient->list("/");
 
     QQuickView view;
-    //view.setResizeMode(QQuickView::SizeRootObjectToView);
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    view.setWidth(480);
+    view.setHeight(640);
     QQmlContext *ctxt = view.rootContext();
     ctxt->setContextProperty("currentFolderModel", &model);
 
