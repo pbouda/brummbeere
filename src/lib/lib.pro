@@ -7,10 +7,12 @@ TARGET = twomusic
 CONFIG += staticlib
 
 SOURCES += \
-    qwebdav.cpp
+    qwebdav.cpp \
+    filemodel.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
 HEADERS += \
-    qwebdav.h
+    qwebdav.h \
+    filemodel.h
