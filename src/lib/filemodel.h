@@ -24,7 +24,9 @@ private:
 class FileModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(bool hasAudio READ hasAudio)
+    Q_PROPERTY(bool hasAudio READ hasAudio NOTIFY hasAudioChanged)
+    Q_PROPERTY(QStringList playlist READ playlist)
+
 public:
     enum FileRoles {
         NameRole = Qt::UserRole + 1,
@@ -39,13 +41,19 @@ public:
     void initDav(QString davUrl, QString davUser, QString davPassword);
     void loadFromDir(QString davDir);
     bool hasAudio();
+    QStringList playlist();
 
 protected:
     QHash<int, QByteArray> roleNames() const;
 
+signals:
+    void hasAudioChanged();
+
 private:
     QList<File> mFiles;
     QWebDAV* mDavClient;
+    QString mDavUrl;
+    QString mAuthUrl;
 
 public slots:
     //void directoryListingError(QString url);

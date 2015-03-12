@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setWidth(480);
     view.setHeight(640);
+    view.setColor(QColor("black"));
 
     QQmlContext *ctxt = view.rootContext();
     ctxt->setContextProperty("currentFolderModel", &model);

@@ -5,7 +5,6 @@
 File::File(const QString &path, const QString &type)
     : mType(type), mPath(path)
 {
-    qDebug() << type;
     QFileInfo fileInfo(path);
     mName = fileInfo.fileName();
     if (mName.isEmpty() && path.endsWith("/")) {
@@ -35,23 +34,27 @@ QString File::path() const
 FileModel::FileModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-
 }
 
 void FileModel::initDav(QString davUrl, QString davUser, QString davPassword)
 {
-    QString strDavUrl = davUrl;
-    if (!strDavUrl.endsWith("/"))
-        strDavUrl += "/";
-    strDavUrl = strDavUrl + "remote.php/webdav";
+    mDavUrl = davUrl;
+    if (!mDavUrl.endsWith("/"))
+        mDavUrl += "/";
+    mDavUrl = mDavUrl + "remote.php/webdav";
+    mAuthUrl = mDavUrl;
+    if (mAuthUrl.startsWith("http://"))
+        mAuthUrl = mAuthUrl.replace("http://", "http://" + davUser + ":" + davPassword + "@");
+    else if (mAuthUrl.startsWith("https://"))
+        mAuthUrl = mAuthUrl.replace("https://", "https://" + davUser + ":" + davPassword + "@");
     // parse Url to get parts
-    QUrl qtUrl(strDavUrl);
+    QUrl qtUrl(mDavUrl);
     mDavClient = new QWebDAV();
 
     connect(mDavClient, SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
         this, SLOT(addDavFiles(QList<QWebDAV::FileInfo>)));
 
-    mDavClient->initialize(strDavUrl, davUser, davPassword, qtUrl.path());
+    mDavClient->initialize(mDavUrl, davUser, davPassword, qtUrl.path());
 }
 
 void FileModel::loadFromDir(QString davDir)
@@ -101,6 +104,17 @@ bool FileModel::hasAudio()
     return false;
 }
 
+QStringList FileModel::playlist()
+{
+    QStringList result;
+    for (int i=0; i < mFiles.length(); i++) {
+        if (mFiles[i].type() == "audio/mpeg") {
+            result.append(mAuthUrl + mFiles[i].path());
+        }
+    }
+    return result;
+}
+
 /************** SLOTS *****************/
 
 void FileModel::addDavFiles(QList<QWebDAV::FileInfo> fileInfo)
@@ -109,6 +123,7 @@ void FileModel::addDavFiles(QList<QWebDAV::FileInfo> fileInfo)
         if (fileInfo[i].type == "directory" || fileInfo[i].type == "audio/mpeg")
             addFile(File(fileInfo[i].fileName, fileInfo[i].type));
     }
+    emit hasAudioChanged();
 }
 
 void FileModel::loadFolder(int fileIndex) {

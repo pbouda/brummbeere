@@ -1,46 +1,123 @@
 import QtQuick 2.4
+import QtMultimedia 5.0
 
-ListView {
+Item {
     signal itemSelected(int index)
-    id: currentFolder
-    topMargin: 5
-    bottomMargin: 5
     anchors.fill: parent
-    clip: true
-    delegate: Item {        
-        x: 5
-        height: 70
-        width: currentFolder.width
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: itemSelected(model.index)
+    ListView {
+        id: currentFolder
+        topMargin: 5
+        bottomMargin: 5
+        anchors.top: parent.top
+        width: parent.width
+        height: parent.height-70
+        clip: true
+        model: currentFolderModel
+
+        delegate: Item {
+            x: 5
+            height: 70
+            width: currentFolder.width
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: itemSelected(model.index)
+            }
+
+            Row {
+                id: row1
+                spacing: 10
+
+                Rectangle {
+                    width: 60
+                    height: 60
+                    color: "#B3D4FC"
+                    Image {
+                        anchors.centerIn: parent
+                        source: {
+                            type == "directory" ? "images/folder.png" : "images/musicfile.png"
+                        }
+                    }
+                }
+
+                Text {
+                    text: name
+                    font.pointSize: 24
+                    color: "white"
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.bold: true
+                }
+            }
+        }
+
+    }
+
+    Item {
+        property var currentAudio: 0
+        property var playlist: []
+
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 210
+        height: 70
+        id: player
+        visible: currentFolderModel.hasAudio
+
+        MediaPlayer {
+            id: playerMusic
         }
 
         Row {
-            id: row1
             spacing: 10
-
             Rectangle {
-                width: 60
-                height: 60
-                color: "#B3D4FC";
+                id: playerBack
+                height: 70
+                width: 70
+                color: "#1fd26a"
+                MouseArea {
+                    anchors.fill: parent
+                }
                 Image {
+                    source: "images/prev.png"
                     anchors.centerIn: parent
-                    source: {
-                        type == "directory" ? "images/folder.png" : "images/musicfile.png"
-                    }
                 }
             }
+            Rectangle {
+                id: playerStartStop
+                height: 70
+                width: 70
+                color: "#1fd26a"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        player.playlist = currentFolderModel.playlist;
+                        playerMusic.source = player.playlist[player.currentAudio];
+                        playerMusic.play();
+                    }
+                }
+                Image {
+                    source: "images/play.png"
+                    anchors.centerIn: parent
+                }
 
-            Text {
-                text: name
-                font.pointSize: 18
-                anchors.verticalCenter: parent.verticalCenter
-                font.bold: true
+            }
+            Rectangle {
+                id:playerForward
+                height: 70
+                width: 70
+                color: "#1fd26a"
+                MouseArea {
+                    anchors.fill: parent
+                }
+                Image {
+                    source: "images/next.png"
+                    anchors.centerIn: parent
+                }
             }
         }
     }
-    model: currentFolderModel
+
 }
+
 

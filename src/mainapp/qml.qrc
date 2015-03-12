@@ -5,5 +5,10 @@
     <qresource prefix="/images">
         <file alias="folder.png">images/folder.png</file>
         <file alias="musicfile.png">images/musicfile.png</file>
+        <file alias="next.png">images/next.png</file>
+        <file alias="pause.png">images/pause.png</file>
+        <file alias="play.png">images/play.png</file>
+        <file alias="prev.png">images/prev.png</file>
+        <file alias="stop.png">images/stop.png</file>
     </qresource>
 </RCC>
