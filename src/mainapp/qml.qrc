@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>view.qml</file>
+        <file>player.js</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="folder.png">images/folder.png</file>

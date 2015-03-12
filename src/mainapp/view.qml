@@ -1,6 +1,8 @@
 import QtQuick 2.4
 import QtMultimedia 5.0
 
+import "player.js" as PlayerCmd
+
 Item {
     signal itemSelected(int index)
     anchors.fill: parent
@@ -77,6 +79,7 @@ Item {
                 color: "#1fd26a"
                 MouseArea {
                     anchors.fill: parent
+                    onClicked: PlayerCmd.prev();
                 }
                 Image {
                     source: "images/prev.png"
@@ -92,8 +95,8 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         player.playlist = currentFolderModel.playlist;
-                        playerMusic.source = player.playlist[player.currentAudio];
-                        playerMusic.play();
+                        player.currentAudio = 0;
+                        PlayerCmd.play();
                     }
                 }
                 Image {
@@ -109,6 +112,7 @@ Item {
                 color: "#1fd26a"
                 MouseArea {
                     anchors.fill: parent
+                    onClicked: PlayerCmd.next()
                 }
                 Image {
                     source: "images/next.png"
