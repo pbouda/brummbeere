@@ -9,15 +9,16 @@
 class File
 {
 public:
-    File(const QString &name, const QString &icon);
+    File(const QString &path, const QString &type);
 
-    QString icon() const;
+    QString type() const;
     QString name() const;
+    QString path() const;
 
 private:
     QString mName;
-    QString mIcon;
-
+    QString mType;
+    QString mPath;
 };
 
 class FileModel : public QAbstractListModel
@@ -26,7 +27,7 @@ class FileModel : public QAbstractListModel
 public:
     enum FileRoles {
         NameRole = Qt::UserRole + 1,
-        IconRole
+        TypeRole
     };
 
     FileModel(QObject *parent = 0);
@@ -34,16 +35,20 @@ public:
     void addFile(const File &file);
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+    void initDav(QString davUrl, QString davUser, QString davPassword);
+    void loadFromDir(QString davDir);
 
 protected:
     QHash<int, QByteArray> roleNames() const;
 
 private:
     QList<File> mFiles;
+    QWebDAV* mDavClient;
 
 public slots:
     //void directoryListingError(QString url);
     void addDavFiles(QList<QWebDAV::FileInfo> fileInfo);
+    void loadFolder(int);
 
 };
 

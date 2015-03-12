@@ -1,13 +1,22 @@
+#include <QFileInfo>
+
 #include "filemodel.h"
 
-File::File(const QString &name, const QString &icon)
-    : mName(name), mIcon(icon)
+File::File(const QString &path, const QString &type)
+    : mType(type), mPath(path)
 {
+    QFileInfo fileInfo(path);
+    mName = fileInfo.fileName();
+    if (mName.isEmpty() && path.endsWith("/")) {
+        QStringList pathParts = path.split("/");
+        if (pathParts.length > 1)
+            mName = pathParts[pathParts.length()-2];
+    }
 }
 
-QString File::icon() const
+QString File::type() const
 {
-    return mIcon;
+    return mType;
 }
 
 QString File::name() const
@@ -15,11 +24,38 @@ QString File::name() const
     return mName;
 }
 
+QString File::path() const
+{
+    return mPath;
+}
+
+/************************** FileModel **************************/
 
 FileModel::FileModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 
+}
+
+void FileModel::initDav(QString davUrl, QString davUser, QString davPassword)
+{
+    QString strDavUrl = davUrl;
+    if (!strDavUrl.endsWith("/"))
+        strDavUrl += "/";
+    strDavUrl = strDavUrl + "remote.php/webdav";
+    // parse Url to get parts
+    QUrl qtUrl(strDavUrl);
+    mDavClient = new QWebDAV();
+
+    connect(mDavClient, SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
+        this, SLOT(addDavFiles(QList<QWebDAV::FileInfo>)));
+
+    mDavClient->initialize(strDavUrl, davUser, davPassword, qtUrl.path());
+}
+
+void FileModel::loadFromDir(QString davDir)
+{
+    mDavClient->list(davDir);
 }
 
 void FileModel::addFile(const File &file)
@@ -41,24 +77,36 @@ QVariant FileModel::data(const QModelIndex & index, int role) const {
     const File &file = mFiles[index.row()];
     if (role == NameRole)
         return file.name();
-    else if (role == IconRole)
-        return file.icon();
+    else if (role == TypeRole)
+        return file.type();
     return QVariant();
 }
 
 QHash<int, QByteArray> FileModel::roleNames() const {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
-    roles[IconRole] = "icon";
+    roles[TypeRole] = "type";
     return roles;
 }
+
+/************** SLOTS *****************/
 
 void FileModel::addDavFiles(QList<QWebDAV::FileInfo> fileInfo)
 {
     for (int i = 0; i < fileInfo.size(); i++ ) {
-        QString icon = "file.png";
-        if (fileInfo[i].type != "directory")
-            icon = "directory.png";
-        addFile(File(fileInfo[i].fileName, icon));
+        addFile(File(fileInfo[i].fileName, fileInfo[i].type));
     }
+}
+
+void FileModel::loadFolder(int fileIndex) {
+    File fileToLoad = mFiles[fileIndex];
+    if (fileToLoad.type() != "directory")
+        return;
+
+    // Clear current files
+    beginRemoveRows(QModelIndex(), 0, mFiles.length()-1);
+    mFiles.clear();
+    endRemoveRows();
+
+    loadFromDir(fileToLoad.path());
 }

@@ -8,8 +8,8 @@
 #include "filemodel.h"
 #include "qwebdav.h"
 
-QString DAV_URL("https://localhost");
-QString DAV_USER("test");
+QString DAV_URL("http://127.0.0.1/owncloud");
+QString DAV_USER("user");
 QString DAV_PASS("password");
 
 int main(int argc, char *argv[])
@@ -17,33 +17,22 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     FileModel model;
-
-    QString mDavUrl = DAV_URL;
-    if (!mDavUrl.endsWith("/"))
-        mDavUrl += "/";
-    mDavUrl = mDavUrl + "remote.php/webdav";
-    QWebDAV* mDavClient = new QWebDAV();
-
-    // Connect to QWebDAV signals
-    /*connect(mDavClient,SIGNAL(directoryListingError(QString)),
-        this, SLOT(directoryListingError(QString)));*/
-    QObject::connect(mDavClient, SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
-        &model, SLOT(addDavFiles(QList<QWebDAV::FileInfo>)));
-
-    mDavClient->initialize(mDavUrl, DAV_USER, DAV_PASS, "/remote.php/webdav");
-    mDavClient->list("/");
+    model.initDav(DAV_URL, DAV_USER, DAV_PASS);
+    model.loadFromDir("/");
 
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setWidth(480);
     view.setHeight(640);
+
     QQmlContext *ctxt = view.rootContext();
     ctxt->setContextProperty("currentFolderModel", &model);
-
-    //QQmlApplicationEngine engine;
-    //engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     view.setSource(QUrl("qrc:view.qml"));
-    view.show();
 
+    QObject *item = view.rootObject();
+    QObject::connect(item, SIGNAL(itemSelected(int)),
+                         &model, SLOT(loadFolder(int)));
+
+    view.show();
     return app.exec();
 }
