@@ -5,11 +5,12 @@
 File::File(const QString &path, const QString &type)
     : mType(type), mPath(path)
 {
+    qDebug() << type;
     QFileInfo fileInfo(path);
     mName = fileInfo.fileName();
     if (mName.isEmpty() && path.endsWith("/")) {
         QStringList pathParts = path.split("/");
-        if (pathParts.length > 1)
+        if (pathParts.length() > 1)
             mName = pathParts[pathParts.length()-2];
     }
 }
@@ -70,7 +71,8 @@ int FileModel::rowCount(const QModelIndex & parent) const {
     return mFiles.count();
 }
 
-QVariant FileModel::data(const QModelIndex & index, int role) const {
+QVariant FileModel::data(const QModelIndex & index, int role) const
+{
     if (index.row() < 0 || index.row() >= mFiles.count())
         return QVariant();
 
@@ -82,11 +84,21 @@ QVariant FileModel::data(const QModelIndex & index, int role) const {
     return QVariant();
 }
 
-QHash<int, QByteArray> FileModel::roleNames() const {
+QHash<int, QByteArray> FileModel::roleNames() const
+{
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[TypeRole] = "type";
     return roles;
+}
+
+bool FileModel::hasAudio()
+{
+    for (int i=0; i < mFiles.length(); i++) {
+        if (mFiles[i].type() == "audio/mpeg")
+            return true;
+    }
+    return false;
 }
 
 /************** SLOTS *****************/
@@ -94,7 +106,8 @@ QHash<int, QByteArray> FileModel::roleNames() const {
 void FileModel::addDavFiles(QList<QWebDAV::FileInfo> fileInfo)
 {
     for (int i = 0; i < fileInfo.size(); i++ ) {
-        addFile(File(fileInfo[i].fileName, fileInfo[i].type));
+        if (fileInfo[i].type == "directory" || fileInfo[i].type == "audio/mpeg")
+            addFile(File(fileInfo[i].fileName, fileInfo[i].type));
     }
 }
 

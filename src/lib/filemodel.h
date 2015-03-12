@@ -24,6 +24,7 @@ private:
 class FileModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(bool hasAudio READ hasAudio)
 public:
     enum FileRoles {
         NameRole = Qt::UserRole + 1,
@@ -37,6 +38,7 @@ public:
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
     void initDav(QString davUrl, QString davUser, QString davPassword);
     void loadFromDir(QString davDir);
+    bool hasAudio();
 
 protected:
     QHash<int, QByteArray> roleNames() const;
