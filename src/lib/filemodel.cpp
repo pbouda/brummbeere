@@ -84,7 +84,17 @@ QVariant FileModel::data(const QModelIndex & index, int role) const
         return file.name();
     else if (role == TypeRole)
         return file.type();
+    else if (role == PathRole)
+        return file.path();
     return QVariant();
+}
+
+QVariantMap FileModel::get(int idx) const {
+    QVariantMap map;
+    foreach(int k, roleNames().keys()) {
+        map[roleNames().value(k)] = data(index(idx, 0), k);
+    }
+    return map;
 }
 
 QHash<int, QByteArray> FileModel::roleNames() const
@@ -92,6 +102,7 @@ QHash<int, QByteArray> FileModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[TypeRole] = "type";
+    roles[PathRole] = "path";
     return roles;
 }
 

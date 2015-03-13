@@ -1,69 +1,58 @@
-import QtQuick 2.0
+import QtQuick 2.4
+import QtQuick.Controls 1.2
+import QtQuick.Layouts 1.1
 
-ListView {
-    id: currentFolder
+import "player.js" as PlayerCmd
+
+ColumnLayout {
+    id: layout
     anchors.fill: parent
-    clip: true
-    model: currentFolderModel
+    Layout.minimumWidth: 480
+    Layout.minimumHeight: 640
+    Layout.preferredWidth: 480
+    Layout.preferredHeight: 640
 
-    delegate: Item {
-        x: 5
-        height: 70
-        width: currentFolder.width
+    TableView {
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: itemSelected(model.index)
+        id: currentFolder
+        frameVisible: false
+        headerVisible: false
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        anchors.top: parent.top
+        clip: true
+        model: currentFolderModel
+
+        onClicked: {
+            root.currentFolderName = currentFolderModel.get(row).path;
+            itemSelected(row);
         }
 
-        Row {
-            id: row1
-            spacing: 10
-
-            Rectangle {
-                width: 60
-                height: 60
-                color: "#B3D4FC"
-                Image {
-                    anchors.centerIn: parent
-                    source: {
-                        type == "directory" ? "images/folder.png" : "images/musicfile.png"
-                    }
-                }
-            }
-
-            Text {
-                text: name
-                anchors.verticalCenter: parent.verticalCenter
-                font.bold: true
-            }
+        TableViewColumn {
+            id: typeColumn
+            title: "Icon"
+            role: "type"
+            movable: false
+            resizable: false
+            width: 70
         }
+
+        TableViewColumn {
+            id: nameColumn
+            title: "Name"
+            role: "name"
+            movable: false
+            resizable: false
+            width: currentFolder.viewport.width - typeColumn.width
+        }
+
     }
 
-    Rectangle {
-        id: playerStart
-        height: 70
-        width: 70
-        color: "#1fd26a"
-        visible: currentFolderModel.hasAudio
-        anchors.horizontalCenter: parent.horizontalCenter
+    Button {
+        Layout.fillWidth: true
         anchors.bottom: parent.bottom
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                player.playlist = currentFolderModel.playlist;
-                player.currentAudio = 0;
-                PlayerCmd.play();
-            }
-        }
-        Image {
-            source: "images/play.png"
-            anchors.centerIn: parent
-        }
-
+        text: "Play folder"
+        enabled: currentFolderModel.hasAudio
+        onClicked: PlayerCmd.playCurrent()
     }
-
 }
-
-
-

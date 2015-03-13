@@ -30,7 +30,8 @@ class FileModel : public QAbstractListModel
 public:
     enum FileRoles {
         NameRole = Qt::UserRole + 1,
-        TypeRole
+        TypeRole,
+        PathRole
     };
 
     FileModel(QObject *parent = 0);
@@ -38,6 +39,7 @@ public:
     void addFile(const File &file);
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+    Q_INVOKABLE QVariantMap get(int idx) const;
     void initDav(QString davUrl, QString davUser, QString davPassword);
     void loadFromDir(QString davDir);
     bool hasAudio();

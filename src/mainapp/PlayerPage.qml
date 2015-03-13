@@ -1,22 +1,14 @@
-import QtQuick 2.0
-import QtMultimedia 5.0
+import QtQuick 2.4
 
 import "player.js" as PlayerCmd
 
 Item {
-    property var currentAudio: 0
-    property var playlist: []
+    id: player
 
-    anchors.bottom: parent.bottom
-    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.centerIn: parent
     width: 210
     height: 70
-    id: player
     visible: currentFolderModel.hasAudio
-
-    MediaPlayer {
-        id: playerMusic
-    }
 
     Row {
         spacing: 10

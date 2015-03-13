@@ -2,15 +2,25 @@ import QtQuick 2.4
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import QtMultimedia 5.0
 
 import "UI.js" as UI
 
 ApplicationWindow {
     signal itemSelected(int index)
+    property var currentFolderName: "/"
+    property var playerMusic:
+        MediaPlayer {
+            property var currentAudio: 0
+            property var playlist: []
+        }
+
+    id: root
     visible: true
     width: 480
     height: 640
     title: "TwoMusic - ownCloud Music Player"
+
 
     MessageDialog {
         id: aboutDialog
@@ -59,18 +69,26 @@ ApplicationWindow {
         Tab {
             title: "Browser"
             BrowserPage {
-                enabled: enabler.checked
+                //enabled: enabler.checked
             }
         }
 
         Tab {
             title: "Player"
             PlayerPage {
-                enabled: enabler.checked
+                //enabled: enabler.checked
             }
         }
     }
 
+    statusBar: StatusBar {
+        RowLayout {
+            Layout.fillWidth: true
+            Label {
+                text: currentFolderName
+            }
+        }
+    }
 }
 
 
