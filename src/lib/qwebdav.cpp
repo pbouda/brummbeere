@@ -338,7 +338,7 @@ void QWebDAV::dirList(QString dir)
 
 void QWebDAV::processDirList(QByteArray xml, QString url)
 {
-    //qDebug() << "\n\n\n" << xml;
+    //qDebug() << url << "\n\n\n" << xml;
     QList<QWebDAV::FileInfo> list;
     QDomDocument domDocument;
     QString errorStr;

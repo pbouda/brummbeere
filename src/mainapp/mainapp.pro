@@ -1,6 +1,9 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml
+QT += quick
+!no_desktop: QT += widgets
+
+QT += xml
 
 TARGET = twomusic
 
@@ -17,4 +20,5 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-HEADERS +=
+HEADERS += \
+    qtquickcontrolsapplication.h

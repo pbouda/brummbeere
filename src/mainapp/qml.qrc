@@ -2,6 +2,12 @@
     <qresource prefix="/">
         <file>view.qml</file>
         <file>player.js</file>
+        <file>BrowserPage.qml</file>
+        <file>PlayerPage.qml</file>
+        <file>UI.js</file>
+        <file>+android/UI.js</file>
+        <file>+ios/UI.js</file>
+        <file>+osx/UI.js</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="folder.png">images/folder.png</file>

@@ -1,123 +1,72 @@
 import QtQuick 2.4
-import QtMultimedia 5.0
+import QtQuick.Controls 1.2
+import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.1
 
-import "player.js" as PlayerCmd
+import "UI.js" as UI
 
-Item {
+ApplicationWindow {
     signal itemSelected(int index)
-    anchors.fill: parent
+    visible: true
+    width: 480
+    height: 640
+    title: "TwoMusic - ownCloud Music Player"
 
-    ListView {
-        id: currentFolder
-        topMargin: 5
-        bottomMargin: 5
-        anchors.top: parent.top
-        width: parent.width
-        height: parent.height-70
-        clip: true
-        model: currentFolderModel
-
-        delegate: Item {
-            x: 5
-            height: 70
-            width: currentFolder.width
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: itemSelected(model.index)
-            }
-
-            Row {
-                id: row1
-                spacing: 10
-
-                Rectangle {
-                    width: 60
-                    height: 60
-                    color: "#B3D4FC"
-                    Image {
-                        anchors.centerIn: parent
-                        source: {
-                            type == "directory" ? "images/folder.png" : "images/musicfile.png"
-                        }
-                    }
-                }
-
-                Text {
-                    text: name
-                    font.pointSize: 24
-                    color: "white"
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.bold: true
-                }
-            }
-        }
-
+    MessageDialog {
+        id: aboutDialog
+        icon: StandardIcon.Information
+        title: "About"
+        text: "<b>TwoMusic</b> - ownCloud Music Player"
+        informativeText: "<p>v0.0.1</p><p>A music player for ownCloud. Just browse to any folder and click play. \
+            Developed by <a href=\"http://www.peterbouda.eu\">www.peterbouda.eu</a>. For bug \
+            reports and suggestions please use <a href=\"https://github.com/pbouda/twomusic/issues\">the issue tracker</a>.</p>"
     }
 
-    Item {
-        property var currentAudio: 0
-        property var playlist: []
+    menuBar: MenuBar {
+        Menu {
+            title: "&File"
+            MenuItem {
+                text: "&Settings"
+                //onTriggered: Qt.quit()
+            }
+            MenuItem {
+                text: "E&xit"
+                shortcut: StandardKey.Quit
+                onTriggered: Qt.quit()
+            }
+        }
+        Menu {
+            title: "&Help"
+            MenuItem {
+                text: "About..."
+                onTriggered: aboutDialog.open()
+            }
+        }
+    }
 
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: 210
-        height: 70
-        id: player
-        visible: currentFolderModel.hasAudio
+    TabView {
+        id: tabView
 
-        MediaPlayer {
-            id: playerMusic
+        anchors.fill: parent
+        anchors.margins: UI.margin
+        tabPosition: UI.tabPosition
+
+        Layout.minimumWidth: 480
+        Layout.minimumHeight: 640
+        Layout.preferredWidth: 480
+        Layout.preferredHeight: 640
+
+        Tab {
+            title: "Browser"
+            BrowserPage {
+                enabled: enabler.checked
+            }
         }
 
-        Row {
-            spacing: 10
-            Rectangle {
-                id: playerBack
-                height: 70
-                width: 70
-                color: "#1fd26a"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: PlayerCmd.prev();
-                }
-                Image {
-                    source: "images/prev.png"
-                    anchors.centerIn: parent
-                }
-            }
-            Rectangle {
-                id: playerStartStop
-                height: 70
-                width: 70
-                color: "#1fd26a"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        player.playlist = currentFolderModel.playlist;
-                        player.currentAudio = 0;
-                        PlayerCmd.play();
-                    }
-                }
-                Image {
-                    source: "images/play.png"
-                    anchors.centerIn: parent
-                }
-
-            }
-            Rectangle {
-                id:playerForward
-                height: 70
-                width: 70
-                color: "#1fd26a"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: PlayerCmd.next()
-                }
-                Image {
-                    source: "images/next.png"
-                    anchors.centerIn: parent
-                }
+        Tab {
+            title: "Player"
+            PlayerPage {
+                enabled: enabler.checked
             }
         }
     }
