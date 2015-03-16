@@ -1,4 +1,5 @@
 #include <QFileInfo>
+#include <QSettings>
 
 #include "filemodel.h"
 
@@ -38,34 +39,6 @@ QString File::path() const
 FileModel::FileModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-}
-
-void FileModel::initDav(const QString &davUrl,
-                        const QString &davUser,
-                        const QString &davPassword)
-{
-    mDavUrl = davUrl;
-    if (!mDavUrl.endsWith("/"))
-        mDavUrl += "/";
-    mDavUrl = mDavUrl + "remote.php/webdav";
-    mAuthUrl = mDavUrl;
-    if (mAuthUrl.startsWith("http://"))
-        mAuthUrl = mAuthUrl.replace("http://", "http://" + davUser + ":" + davPassword + "@");
-    else if (mAuthUrl.startsWith("https://"))
-        mAuthUrl = mAuthUrl.replace("https://", "https://" + davUser + ":" + davPassword + "@");
-    // parse Url to get parts
-    QUrl qtUrl(mDavUrl);
-    mDavClient = new QWebDAV();
-
-    connect(mDavClient, SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
-        this, SLOT(addDavFiles(QList<QWebDAV::FileInfo>)));
-
-    mDavClient->initialize(mDavUrl, davUser, davPassword, qtUrl.path());
-}
-
-void FileModel::loadFromDir(const QString &davDir)
-{
-    mDavClient->list(davDir);
 }
 
 void FileModel::addFile(const File &file)
@@ -133,6 +106,39 @@ QStringList FileModel::playlist()
 }
 
 /************** SLOTS *****************/
+
+void FileModel::initDav(const QString &davUrl,
+                        const QString &davUser,
+                        const QString &davPassword)
+{
+    mDavUrl = davUrl;
+    if (!mDavUrl.endsWith("/"))
+        mDavUrl += "/";
+    mDavUrl = mDavUrl + "remote.php/webdav";
+    mAuthUrl = mDavUrl;
+    if (mAuthUrl.startsWith("http://"))
+        mAuthUrl = mAuthUrl.replace("http://", "http://" + davUser + ":" + davPassword + "@");
+    else if (mAuthUrl.startsWith("https://"))
+        mAuthUrl = mAuthUrl.replace("https://", "https://" + davUser + ":" + davPassword + "@");
+    // parse Url to get parts
+    QUrl qtUrl(mDavUrl);
+    mDavClient = new QWebDAV();
+
+    connect(mDavClient, SIGNAL(directoryListingReady(QList<QWebDAV::FileInfo>)),
+        this, SLOT(addDavFiles(QList<QWebDAV::FileInfo>)));
+
+    mDavClient->initialize(mDavUrl, davUser, davPassword, qtUrl.path());
+
+    QSettings settings("peterbouda.eu", "TwoMusic");
+    settings.setValue("user", davUser);
+    settings.setValue("password", davPassword);
+    settings.setValue("url", davUrl);
+}
+
+void FileModel::loadFromDir(const QString &davDir)
+{
+    mDavClient->list(davDir);
+}
 
 void FileModel::addDavFiles(const QList<QWebDAV::FileInfo> &fileInfo)
 {

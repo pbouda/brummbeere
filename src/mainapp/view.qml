@@ -9,7 +9,7 @@ import "UI.js" as UI
 
 ApplicationWindow {
     signal itemSelected(int index)
-    property var currentFolderName: "/"
+    property var currentFolderName: "Connect to ownCloud - please add settings"
     property var playerMusic:
         MediaPlayer {
             property var currentAudio: 0
@@ -36,12 +36,45 @@ ApplicationWindow {
             reports and suggestions please use <a href=\"https://github.com/pbouda/twomusic/issues\">the issue tracker</a>.</p>"
     }
 
+    Dialog {
+        id: settingsDialog
+        width: 400
+        height: 200
+        title: "ownCloud Settings"
+        standardButtons: StandardButton.Save | StandardButton.Cancel
+        onAccepted: {
+            currentFolderModel.initDav(ownCloudUrl.text, ownCloudUser.text, ownCloudPass.text);
+            currentFolderModel.loadFromDir("/");
+            root.currentFolderName = "/";
+        }
+
+        GridLayout {
+            anchors.fill: parent
+            columns: 2
+            Label { text: "ownCloud Server URL:" }
+            TextField { id: ownCloudUrl; Layout.fillWidth: true }
+            Label { text: "Username:" }
+            TextField { id: ownCloudUser; Layout.fillWidth: true }
+            Label { text: "Password:" }
+            TextField {
+                id: ownCloudPass
+                echoMode: TextInput.Password
+                Layout.fillWidth: true
+            }
+            CheckBox {
+                id: storePassword
+                text: "Store password?"
+                Layout.columnSpan: 2
+            }
+        }
+    }
+
     menuBar: MenuBar {
         Menu {
             title: "&File"
             MenuItem {
                 text: "&Settings"
-                //onTriggered: Qt.quit()
+                onTriggered: settingsDialog.open()
             }
             MenuItem {
                 text: "E&xit"

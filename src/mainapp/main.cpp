@@ -5,12 +5,8 @@
 #include <QtGui/QSurfaceFormat>
 #include <QQmlContext>
 #include <QQuickWindow>
-
-/*#include <qqmlengine.h>
-#include <qqmlcontext.h>
-#include <qqml.h>
-#include <QtQuick/qquickitem.h>
-#include <QtQuick/qquickview.h>*/
+#include <QSettings>
+#include <QtQuickWidgets/QQuickWidget>
 
 #include "filemodel.h"
 
@@ -30,18 +26,6 @@ int main(int argc, char *argv[])
     }
 
     FileModel model;
-    model.initDav(DAV_URL, DAV_USER, DAV_PASS);
-    model.loadFromDir("/");
-
-    /*QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
-    view.setWidth(480);
-    view.setHeight(640);
-    //view.setColor(QColor("black"));
-
-    QQmlContext *ctxt = view.rootContext();
-    ctxt->setContextProperty("currentFolderModel", &model);
-    view.setSource(QUrl("qrc:view.qml"));*/
 
     QQmlApplicationEngine* engine = new QQmlApplicationEngine();
     engine->rootContext()->setContextProperty("currentFolderModel", &model);
@@ -50,6 +34,23 @@ int main(int argc, char *argv[])
     QQuickWindow* window = qobject_cast<QQuickWindow*>(engine->rootObjects().at(0));
     QObject::connect(window, SIGNAL(itemSelected(int)),
                          &model, SLOT(loadFolder(int)));
+
+    // Load ownCloud or settings dialogue
+    QSettings settings("peterbouda.eu", "TwoMusic");
+    QString davUrl = settings.value("url").toString();
+    QString davUser = settings.value("user").toString();
+    QString davPass = settings.value("password").toString();
+    if (davUrl.isEmpty() || davUser.isEmpty() || davPass.isEmpty()) {
+        // TODO: show settings dialog
+
+        //QQuickWidget* dialog = window->findChild<QQuickWidget *>("settingsDialog");
+        //qDebug() << dialog;
+        //dialog->show();
+    } else {
+        model.initDav(davUrl, davUser, davPass);
+        model.loadFromDir("/");
+    }
+
 
     return app.exec();
 
