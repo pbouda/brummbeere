@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.1
 import "player.js" as PlayerCmd
 
 ColumnLayout {
-    id: layout
     anchors.fill: parent
     Layout.minimumWidth: 480
     Layout.minimumHeight: 640

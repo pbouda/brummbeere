@@ -1,4 +1,5 @@
 function play() {
+    root.playerMusic.stop();
     root.playerMusic.source = root.playerMusic.playlist[root.playerMusic.currentAudio];
     root.playerMusic.play();
 }

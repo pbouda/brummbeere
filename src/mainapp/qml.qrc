@@ -10,6 +10,7 @@
         <file>+osx/UI.js</file>
     </qresource>
     <qresource prefix="/images">
+        <file alias="artwork.png">images/artwork.png</file>
         <file alias="folder.png">images/folder.png</file>
         <file alias="musicfile.png">images/musicfile.png</file>
         <file alias="next.png">images/next.png</file>

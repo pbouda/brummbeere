@@ -1,21 +1,43 @@
 import QtQuick 2.4
+import QtMultimedia 5.0
 
 import "player.js" as PlayerCmd
 
-Item {
-    id: player
+Rectangle {
+    anchors.fill: parent
+    color: "black"
 
-    anchors.centerIn: parent
-    width: 210
-    height: 70
-    visible: currentFolderModel.hasAudio
+    Item {
+        id: currentSong
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        height: 150
+        width: 150
+
+        Image {
+            fillMode: Image.PreserveAspectFit
+            source: {
+                root.playerMusic.metaData.coverArtUrlSmall ?
+                    root.playerMusic.metaData.coverArtUrlSmall :
+                    "images/artwork.png"
+            }
+        }
+    }
+
 
     Row {
+        id: player
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        height: 60
         spacing: 10
+
         Rectangle {
             id: playerBack
-            height: 70
-            width: 70
+            height: 60
+            width: 60
             color: "#1fd26a"
             MouseArea {
                 anchors.fill: parent
@@ -28,27 +50,28 @@ Item {
         }
         Rectangle {
             id: playerStartStop
-            height: 70
-            width: 70
+            height: 60
+            width: 60
             color: "#1fd26a"
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    player.playlist = currentFolderModel.playlist;
-                    player.currentAudio = 0;
-                    PlayerCmd.play();
+                    if (root.playerMusic.playlist.length == 0) return;
+                    root.playerMusic.playbackState === MediaPlayer.PlayingState ?
+                        root.playerMusic.pause() : root.playerMusic.play();
                 }
             }
             Image {
-                source: "images/play.png"
+                source: { root.playerMusic.playbackState === MediaPlayer.PlayingState ?
+                    "images/pause.png": "images/play.png" }
                 anchors.centerIn: parent
             }
 
         }
         Rectangle {
             id:playerForward
-            height: 70
-            width: 70
+            height: 60
+            width: 60
             color: "#1fd26a"
             MouseArea {
                 anchors.fill: parent
@@ -60,4 +83,5 @@ Item {
             }
         }
     }
+
 }
