@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 import QtMultimedia 5.0
 
+import "player.js" as PlayerCmd
 import "UI.js" as UI
 
 ApplicationWindow {
@@ -13,6 +14,9 @@ ApplicationWindow {
         MediaPlayer {
             property var currentAudio: 0
             property var playlist: []
+            onStopped: {
+                if (position > duration) PlayerCmd.next();
+            }
         }
 
     id: root

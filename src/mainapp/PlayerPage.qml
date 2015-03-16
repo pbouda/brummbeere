@@ -7,20 +7,57 @@ Rectangle {
     anchors.fill: parent
     color: "black"
 
-    Item {
-        id: currentSong
+    Rectangle {
+        id: artworkSong
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 10
-        height: 150
-        width: 150
+        height: 160
+        width: 160
+        color: "white"
 
-        Image {
-            fillMode: Image.PreserveAspectFit
-            source: {
-                root.playerMusic.metaData.coverArtUrlSmall ?
-                    root.playerMusic.metaData.coverArtUrlSmall :
-                    "images/artwork.png"
+        Rectangle {
+            width: 150
+            height: 150
+            color: "black"
+            anchors.centerIn: parent
+
+            Image {
+                fillMode: Image.PreserveAspectFit
+                width: 150
+                height: 150
+                anchors.centerIn: parent
+                source: {
+                    root.playerMusic.metaData.coverArtUrlSmall ?
+                        root.playerMusic.metaData.coverArtUrlSmall :
+                        "images/artwork.png"
+                }
+            }
+
+        }
+    }
+
+    ListView {
+        id: playlistView
+        model: root.playerMusic.playlist
+        width: parent.width
+        height: parent.height - (artworkSong.height+player.height)
+        anchors.top: artworkSong.bottom
+        anchors.topMargin: 10
+        currentIndex: root.playerMusic.currentAudio
+        highlight: Rectangle {
+            width: parent.width
+            height: 24
+            color: "#ec3f8c"
+        }
+
+        delegate: Text {
+            color: "white"
+            font.pixelSize: 20
+            height: 24
+            text: {
+                var parts = modelData.split("/");
+                return "        " + parts[parts.length-1] + "  ";
             }
         }
     }

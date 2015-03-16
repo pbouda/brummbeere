@@ -5,19 +5,19 @@ function play() {
 }
 
 function next() {
-    root.playerMusic.stop();
     if (root.playerMusic.currentAudio < (root.playerMusic.playlist.length-1)) {
+        root.playerMusic.stop();
         root.playerMusic.currentAudio++;
+        play();
     }
-    play();
 }
 
 function prev() {
-    root.playerMusic.stop();
     if (root.playerMusic.currentAudio > 0) {
+        root.playerMusic.stop();
         root.playerMusic.currentAudio--;
+        play();
     }
-    play();
 }
 
 function playCurrent() {
