@@ -9,7 +9,7 @@
 class File
 {
 public:
-    File(const QString &path, const QString &type);
+    File(const QString &path, const QString &type, const QString &name = "");
 
     QString type() const;
     QString name() const;
@@ -60,7 +60,7 @@ private:
 public slots:
     //void directoryListingError(QString url);
     void addDavFiles(const QList<QWebDAV::FileInfo> &fileInfo);
-    void loadFolder(int);
+    void loadFolder(int fileIndex);
 
 };
 

@@ -2,15 +2,19 @@
 
 #include "filemodel.h"
 
-File::File(const QString &path, const QString &type)
+File::File(const QString &path, const QString &type, const QString &name)
     : mType(type), mPath(path)
 {
-    QFileInfo fileInfo(path);
-    mName = fileInfo.fileName();
-    if (mName.isEmpty() && path.endsWith("/")) {
-        QStringList pathParts = path.split("/");
-        if (pathParts.length() > 1)
-            mName = pathParts[pathParts.length()-2];
+    if (name.isEmpty()) {
+        QFileInfo fileInfo(path);
+        mName = fileInfo.fileName();
+        if (mName.isEmpty() && path.endsWith("/")) {
+            QStringList pathParts = path.split("/");
+            if (pathParts.length() > 1)
+                mName = pathParts[pathParts.length()-2];
+        }
+    } else {
+        mName = name;
     }
 }
 
@@ -71,12 +75,12 @@ void FileModel::addFile(const File &file)
     endInsertRows();
 }
 
-int FileModel::rowCount(const QModelIndex & parent) const {
+int FileModel::rowCount(const QModelIndex &parent) const {
     Q_UNUSED(parent);
     return mFiles.count();
 }
 
-QVariant FileModel::data(const QModelIndex & index, int role) const
+QVariant FileModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= mFiles.count())
         return QVariant();
@@ -148,6 +152,14 @@ void FileModel::loadFolder(int fileIndex) {
     beginRemoveRows(QModelIndex(), 0, mFiles.length()-1);
     mFiles.clear();
     endRemoveRows();
+
+    // Set parent directory
+    QStringList parts = fileToLoad.path().split("/");
+    if (parts.length() > 2) {
+        parts.removeAt(parts.size()-2);
+        QString parentPath = parts.join("/");
+        addFile(File(parentPath, "directory", ".."));
+    }
 
     loadFromDir(fileToLoad.path());
 }
