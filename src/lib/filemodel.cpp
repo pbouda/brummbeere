@@ -36,7 +36,9 @@ FileModel::FileModel(QObject *parent)
 {
 }
 
-void FileModel::initDav(QString davUrl, QString davUser, QString davPassword)
+void FileModel::initDav(const QString &davUrl,
+                        const QString &davUser,
+                        const QString &davPassword)
 {
     mDavUrl = davUrl;
     if (!mDavUrl.endsWith("/"))
@@ -57,7 +59,7 @@ void FileModel::initDav(QString davUrl, QString davUser, QString davPassword)
     mDavClient->initialize(mDavUrl, davUser, davPassword, qtUrl.path());
 }
 
-void FileModel::loadFromDir(QString davDir)
+void FileModel::loadFromDir(const QString &davDir)
 {
     mDavClient->list(davDir);
 }
@@ -128,7 +130,7 @@ QStringList FileModel::playlist()
 
 /************** SLOTS *****************/
 
-void FileModel::addDavFiles(QList<QWebDAV::FileInfo> fileInfo)
+void FileModel::addDavFiles(const QList<QWebDAV::FileInfo> &fileInfo)
 {
     for (int i = 0; i < fileInfo.size(); i++ ) {
         if (fileInfo[i].type == "directory" || fileInfo[i].type == "audio/mpeg")

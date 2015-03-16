@@ -40,8 +40,8 @@ public:
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
     Q_INVOKABLE QVariantMap get(int idx) const;
-    void initDav(QString davUrl, QString davUser, QString davPassword);
-    void loadFromDir(QString davDir);
+    void initDav(const QString &davUrl, const QString &davUser, const QString &davPassword);
+    void loadFromDir(const QString &davDir);
     bool hasAudio();
     QStringList playlist();
 
@@ -59,7 +59,7 @@ private:
 
 public slots:
     //void directoryListingError(QString url);
-    void addDavFiles(QList<QWebDAV::FileInfo> fileInfo);
+    void addDavFiles(const QList<QWebDAV::FileInfo> &fileInfo);
     void loadFolder(int);
 
 };
