@@ -105,6 +105,16 @@ QStringList FileModel::playlist()
     return result;
 }
 
+QStringList FileModel::davSettings()
+{
+    QStringList result;
+    QSettings settings("peterbouda.eu", "TwoMusic");
+    result.append(settings.value("url").toString());
+    result.append(settings.value("user").toString());
+    result.append(settings.value("password").toString());
+    return result;
+}
+
 /************** SLOTS *****************/
 
 void FileModel::initDav(const QString &davUrl,
@@ -133,6 +143,7 @@ void FileModel::initDav(const QString &davUrl,
     settings.setValue("user", davUser);
     settings.setValue("password", davPassword);
     settings.setValue("url", davUrl);
+    emit davSettingsChanged();
 }
 
 void FileModel::loadFromDir(const QString &davDir)

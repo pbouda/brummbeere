@@ -26,6 +26,7 @@ class FileModel : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(bool hasAudio READ hasAudio NOTIFY hasAudioChanged)
     Q_PROPERTY(QStringList playlist READ playlist)
+    Q_PROPERTY(QStringList davSettings READ davSettings NOTIFY davSettingsChanged)
 
 public:
     enum FileRoles {
@@ -42,12 +43,14 @@ public:
     Q_INVOKABLE QVariantMap get(int idx) const;
     bool hasAudio();
     QStringList playlist();
+    QStringList davSettings();
 
 protected:
     QHash<int, QByteArray> roleNames() const;
 
 signals:
     void hasAudioChanged();
+    void davSettingsChanged();
 
 private:
     QList<File> mFiles;

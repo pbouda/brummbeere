@@ -52,14 +52,23 @@ ApplicationWindow {
             anchors.fill: parent
             columns: 2
             Label { text: "ownCloud Server URL:" }
-            TextField { id: ownCloudUrl; Layout.fillWidth: true }
+            TextField {
+                id: ownCloudUrl
+                Layout.fillWidth: true
+                text: currentFolderModel.davSettings[0]
+            }
             Label { text: "Username:" }
-            TextField { id: ownCloudUser; Layout.fillWidth: true }
+            TextField {
+                id: ownCloudUser
+                Layout.fillWidth: true
+                text: currentFolderModel.davSettings[1]
+            }
             Label { text: "Password:" }
             TextField {
                 id: ownCloudPass
                 echoMode: TextInput.Password
                 Layout.fillWidth: true
+                text: currentFolderModel.davSettings[2]
             }
             CheckBox {
                 id: storePassword
