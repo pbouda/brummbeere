@@ -10,7 +10,11 @@ TARGET = twomusic
 SOURCES += main.cpp
 
 INCLUDEPATH += ../lib
-LIBS += -L../lib -ltwomusic
+win32 {
+    LIBS += -L../lib/debug -ltwomusic
+} else {
+    LIBS += -L../lib -ltwomusic
+}
 
 RESOURCES += qml.qrc
 
