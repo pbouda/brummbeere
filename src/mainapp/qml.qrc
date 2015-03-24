@@ -8,6 +8,7 @@
         <file>+android/UI.js</file>
         <file>+ios/UI.js</file>
         <file>+osx/UI.js</file>
+        <file>SettingsPage.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="artwork.png">images/artwork.png</file>

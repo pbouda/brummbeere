@@ -148,6 +148,11 @@ void FileModel::initDav(const QString &davUrl,
 
 void FileModel::loadFromDir(const QString &davDir)
 {
+    // Clear current files
+    beginRemoveRows(QModelIndex(), 0, mFiles.length()-1);
+    mFiles.clear();
+    endRemoveRows();
+
     mDavClient->list(davDir);
 }
 
