@@ -50,11 +50,17 @@ ApplicationWindow {
                 //enabled: enabler.checked
             }
         }
-
         Tab {
             title: "Player"
             PlayerPage {
                 //enabled: enabler.checked
+            }
+        }
+        Tab {
+            title: "Exit"
+            Button {
+                text: "Exit app"
+                onClicked: Qt.quit()
             }
         }
     }
