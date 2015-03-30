@@ -149,9 +149,18 @@ void FileModel::initDav(const QString &davUrl,
 void FileModel::loadFromDir(const QString &davDir)
 {
     // Clear current files
-    beginRemoveRows(QModelIndex(), 0, mFiles.length()-1);
-    mFiles.clear();
-    endRemoveRows();
+    if (mFiles.length() > 0) {
+        beginRemoveRows(QModelIndex(), 0, mFiles.length()-1);
+        mFiles.clear();
+        endRemoveRows();
+    }
+
+    QStringList parts = davDir.split("/");
+    if (parts.length() > 2) {
+        parts.removeAt(parts.size()-2);
+        QString parentPath = parts.join("/");
+        addFile(File(parentPath, "directory", ".."));
+    }
 
     mDavClient->list(davDir);
 }
@@ -169,19 +178,6 @@ void FileModel::loadFolder(int fileIndex) {
     File fileToLoad = mFiles[fileIndex];
     if (fileToLoad.type() != "directory")
         return;
-
-    // Clear current files
-    beginRemoveRows(QModelIndex(), 0, mFiles.length()-1);
-    mFiles.clear();
-    endRemoveRows();
-
-    // Set parent directory
-    QStringList parts = fileToLoad.path().split("/");
-    if (parts.length() > 2) {
-        parts.removeAt(parts.size()-2);
-        QString parentPath = parts.join("/");
-        addFile(File(parentPath, "directory", ".."));
-    }
 
     loadFromDir(fileToLoad.path());
 }
