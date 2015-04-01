@@ -1,12 +1,4 @@
-//#include <QGuiApplication>
-
-#include "qtquickcontrolsapplication.h"
-#include <QtQml/QQmlApplicationEngine>
-#include <QtGui/QSurfaceFormat>
-#include <QQmlContext>
-#include <QQuickWindow>
-#include <QSettings>
-#include <QtQuickWidgets/QQuickWidget>
+#include <QGuiApplication>
 
 #include "filemodel.h"
 
