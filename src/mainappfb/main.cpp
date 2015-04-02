@@ -1,23 +1,22 @@
 #include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickWindow>
+#include <QSettings>
 
 #include "filemodel.h"
 
 int main(int argc, char *argv[])
 {
-    //QGuiApplication app(argc, argv);
-    QtQuickControlsApplication app(argc, argv);
-    if (QCoreApplication::arguments().contains(QLatin1String("--coreprofile"))) {
-        QSurfaceFormat fmt;
-        fmt.setVersion(4, 4);
-        fmt.setProfile(QSurfaceFormat::CoreProfile);
-        QSurfaceFormat::setDefaultFormat(fmt);
-    }
+    QGuiApplication app(argc, argv);
 
     FileModel model;
 
+    //QQmlApplicationEngine engine;
     QQmlApplicationEngine* engine = new QQmlApplicationEngine();
+
     engine->rootContext()->setContextProperty("currentFolderModel", &model);
-    engine->load(QUrl(QStringLiteral("qrc:///view.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QQuickWindow* window = qobject_cast<QQuickWindow*>(engine->rootObjects().at(0));
     QObject::connect(window, SIGNAL(itemSelected(int)),
@@ -39,9 +38,5 @@ int main(int argc, char *argv[])
         model.loadFromDir("/");
     }
 
-
     return app.exec();
-
-    /*view.show();
-    return app.exec();*/
 }

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.qml</file>
+        <file>TitleBar.qml</file>
+        <file>TaskBar.qml</file>
+    </qresource>
+</RCC>
