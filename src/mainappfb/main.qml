@@ -4,7 +4,8 @@ import QtMultimedia 5.0
 
 Window {
     signal itemSelected(int index)
-    property var currentFolderName: "Connect to ownCloud - please add settings"
+    property var currentTitle: "TwoMusic"
+    property var menuActive: false
     property var playerMusic:
         MediaPlayer {
             property var currentAudio: 0
@@ -15,21 +16,31 @@ Window {
         }
 
     id: root
-
     visible: true
+    color: "black"
 
 
     TitleBar {
         id: titlebar
         anchors.top: parent.top
         width: parent.width
+        height: 0.12*parent.height
+
+    }
+
+    Menu {
+        id: menu
+        anchors.top: titlebar.bottom
+        anchors.bottom: taskbar.top
+        width: parent.width
+        visible: false
 
     }
 
     MainForm {
         id: main
-        anchors.top: menu.bottom
-        anchors.bottom: tasks.top
+        anchors.top: titlebar.bottom
+        anchors.bottom: taskbar.top
         width: parent.width
 
         mouseArea.onClicked: {
@@ -38,10 +49,11 @@ Window {
 
     }
 
-    TaskForm {
+    TaskBar {
         id: taskbar
         anchors.bottom: parent.bottom
         width: parent.width
+        height: 0.12*parent.height
 
     }
 

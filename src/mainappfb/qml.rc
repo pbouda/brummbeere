@@ -4,5 +4,8 @@
         <file>MainForm.qml</file>
         <file>TitleBar.qml</file>
         <file>TaskBar.qml</file>
+        <file>Menu.qml</file>
+        <file>MenuContent.qml</file>
+        <file>helpers.js</file>
     </qresource>
 </RCC>

@@ -38,5 +38,7 @@ int main(int argc, char *argv[])
         model.loadFromDir("/");
     }
 
+    window->setMinimumHeight(640);
+    window->setMinimumWidth(480);
     return app.exec();
 }

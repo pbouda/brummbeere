@@ -3,8 +3,7 @@ import QtQuick 2.3
 Rectangle {
     property alias mouseArea: mouseArea
 
-    width: 360
-    height: 360
+    color: "black"
 
     MouseArea {
         id: mouseArea
@@ -13,6 +12,7 @@ Rectangle {
 
     Text {
         anchors.centerIn: parent
+        color: "white"
         text: "Hello World"
     }
 }
