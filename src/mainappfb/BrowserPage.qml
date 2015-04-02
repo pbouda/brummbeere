@@ -1,7 +1,58 @@
 import QtQuick 2.0
 
-Rectangle {
-    width: 100
-    height: 62
+import "helpers.js" as Helpers
+
+ListView {
+
+    model: currentFolderModel
+
+    delegate: Rectangle {
+        height: menu.height/10
+        width: menu.width
+        color: "black"
+
+        Rectangle {
+            id: spacer
+            color: "black"
+            height: parent.height
+            width: parent.width*0.05
+        }
+
+        Image {
+            id: listIcon
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: spacer.right
+            source: type == "directory" ? "images/icon_folder.png" : "images/icon_audiofile.png"
+            height: parent.height
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Text {
+            id: listText
+            text: name
+            anchors.left: listIcon.right
+            anchors.leftMargin: parent.width*0.05
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: parent.height*0.6
+            color: "white"
+        }
+
+        Rectangle {
+            width: parent.width
+            height: 1
+            color: "white"
+            anchors.bottom: parent.bottom
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                root.currentTitle = path;
+                itemSelected(index);
+                if (currentFolderModel.hasAudio) Helpers.showButtons();
+            }
+        }
+
+    }
 }
 

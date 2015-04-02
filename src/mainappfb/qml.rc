@@ -16,5 +16,7 @@
         <file alias="icon_ok.png">images/icon_ok.png</file>
         <file alias="icon_folder.png">images/icon_folder.png</file>
         <file alias="icon_audiofile.png">images/icon_audiofile.png</file>
+        <file alias="icon_home.png">images/icon_home.png</file>
+        <file alias="icon_speaker.png">images/icon_speaker.png</file>
     </qresource>
 </RCC>

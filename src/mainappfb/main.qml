@@ -6,6 +6,7 @@ Window {
     signal itemSelected(int index)
     property var currentTitle: "TwoMusic"
     property var menuActive: false
+    property var taskbarActive: false
     property var playerMusic:
         MediaPlayer {
             property var currentAudio: 0
@@ -19,6 +20,14 @@ Window {
     visible: true
     color: "black"
 
+    Loader {
+        id: main
+        anchors.top: titlebar.bottom
+        anchors.bottom: taskbar.top
+        width: parent.width
+        source: "qrc:/MainForm.qml"
+        visible: !menuActive
+    }
 
     TitleBar {
         id: titlebar
@@ -37,17 +46,10 @@ Window {
 
     }
 
-    Loader {
-        id: main
-        anchors.top: titlebar.bottom
-        anchors.bottom: taskbar.top
-        width: parent.width
-        source: "qrc:/MainForm.qml"
-        visible: !menuActive
-    }
 
     TaskBar {
         id: taskbar
+        visible: taskbarActive
         anchors.bottom: parent.bottom
         width: parent.width
         height: 0.12*parent.height
