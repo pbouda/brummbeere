@@ -33,20 +33,17 @@ Window {
         anchors.top: titlebar.bottom
         anchors.bottom: taskbar.top
         width: parent.width
-        visible: false
+        visible: menuActive
 
     }
 
-    MainForm {
+    Loader {
         id: main
         anchors.top: titlebar.bottom
         anchors.bottom: taskbar.top
         width: parent.width
-
-        mouseArea.onClicked: {
-            Qt.quit();
-        }
-
+        source: "qrc:/MainForm.qml"
+        visible: !menuActive
     }
 
     TaskBar {

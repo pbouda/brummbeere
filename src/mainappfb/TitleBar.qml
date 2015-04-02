@@ -32,7 +32,8 @@ Rectangle {
         width: parent.width/5
         height: parent.height
         border.color: "white"
-        border.width: 0
+        border.width: root.menuActive ? 4 : 0
+
         radius: 5
 
         Text {

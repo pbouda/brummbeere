@@ -1,15 +1,16 @@
 
 function toggleMenu() {
-    if (!root.menuActive) {
-        menuButton.border.width = 4;
+    if (!root.menuActive)
         root.menuActive = true;
-        menu.visible = true;
-        main.visible = false;
-    } else {
-        menuButton.border.width = 0;
+    else
         root.menuActive = false;
-        menu.visible = false;
-        main.visible = true;
-    }
 }
 
+function startAction(name, type) {
+    if (type === "app") {
+        if (name === "exit") Qt.quit();
+    } else if (type === "page") {
+        main.source = "qrc:/" + name + ".qml";
+    }
+    toggleMenu();
+}

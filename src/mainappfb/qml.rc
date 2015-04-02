@@ -7,5 +7,14 @@
         <file>Menu.qml</file>
         <file>MenuContent.qml</file>
         <file>helpers.js</file>
+        <file>BrowserPage.qml</file>
+        <file>PlayerPage.qml</file>
+        <file>SettingsPage.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="icon_cancel.png">images/icon_cancel.png</file>
+        <file alias="icon_ok.png">images/icon_ok.png</file>
+        <file alias="icon_folder.png">images/icon_folder.png</file>
+        <file alias="icon_audiofile.png">images/icon_audiofile.png</file>
     </qresource>
 </RCC>
