@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QQuickWindow* window = qobject_cast<QQuickWindow*>(engine->rootObjects().at(0));
-    QObject::connect(window, SIGNAL(itemSelected(int)),
-                         &model, SLOT(loadFolder(int)));
+    //QObject::connect(window, SIGNAL(itemSelected(int)),
+    //                     &model, SLOT(loadFolder(int)));
 
     // Load ownCloud or settings dialogue
     QSettings settings("peterbouda.eu", "TwoMusic");

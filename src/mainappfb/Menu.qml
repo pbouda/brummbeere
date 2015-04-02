@@ -36,7 +36,6 @@ ListView {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                parent.color = "white";
                 Helpers.startAction(action, type);
             }
         }

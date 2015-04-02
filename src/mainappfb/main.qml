@@ -3,14 +3,15 @@ import QtQuick.Window 2.2
 import QtMultimedia 5.0
 
 Window {
-    signal itemSelected(int index)
-    property var currentTitle: "TwoMusic"
-    property var menuActive: false
-    property var taskbarActive: false
+    //signal itemSelected(int index)
+
+    property string currentTitle: "TwoMusic"
+    property bool menuActive: false
+
     property var playerMusic:
         MediaPlayer {
-            property var currentAudio: 0
-            property var playlist: []
+            property int currentAudio: 0
+            property var currentPlaylist: []
             onStopped: {
                 if (position > duration) PlayerCmd.next();
             }
@@ -25,7 +26,7 @@ Window {
         anchors.top: titlebar.bottom
         anchors.bottom: taskbar.top
         width: parent.width
-        source: "qrc:/MainForm.qml"
+        source: "qrc:/BrowserPage.qml"
         visible: !menuActive
     }
 
@@ -46,14 +47,11 @@ Window {
 
     }
 
-
-    TaskBar {
+    Loader {
         id: taskbar
-        visible: taskbarActive
         anchors.bottom: parent.bottom
         width: parent.width
         height: 0.12*parent.height
-
     }
 
 }

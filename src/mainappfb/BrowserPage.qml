@@ -6,6 +6,10 @@ ListView {
 
     model: currentFolderModel
 
+    Component.onCompleted: {
+        taskbar.source = "qrc:/BrowserPageTaskBar.qml"
+    }
+
     delegate: Rectangle {
         height: menu.height/10
         width: menu.width
@@ -47,9 +51,10 @@ ListView {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                root.currentTitle = path;
-                itemSelected(index);
-                if (currentFolderModel.hasAudio) Helpers.showButtons();
+                if (type === "directory") {
+                    //root.currentTitle = path;
+                    Helpers.loadFolder(path);
+                }
             }
         }
 
