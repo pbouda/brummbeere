@@ -2,8 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = lib \
           #tests \
-          mainapp \
+          #mainapp \
           mainappfb
 
-mainapp.depends = lib
+mainappfb.depends = lib
 #tests.depnds = lib

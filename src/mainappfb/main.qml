@@ -2,6 +2,8 @@ import QtQuick 2.4
 import QtQuick.Window 2.2
 import QtMultimedia 5.0
 
+import "helpers.js" as Helpers
+
 Window {
     //signal itemSelected(int index)
 
@@ -13,7 +15,7 @@ Window {
             property int currentAudio: 0
             property var currentPlaylist: []
             onStopped: {
-                if (position > duration) PlayerCmd.next();
+                if (position > duration) Helpers.next();
             }
         }
 

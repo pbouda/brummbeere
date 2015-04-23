@@ -9,6 +9,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("peterbouda.eu");
+    app.setOrganizationDomain("peterbouda.eu");
+    app.setApplicationName("TwoMusic");
 
     FileModel model;
 
@@ -23,7 +26,7 @@ int main(int argc, char *argv[])
     //                     &model, SLOT(loadFolder(int)));
 
     // Load ownCloud or settings dialogue
-    QSettings settings("peterbouda.eu", "TwoMusic");
+    QSettings settings;
     QString davUrl = settings.value("url").toString();
     QString davUser = settings.value("user").toString();
     QString davPass = settings.value("password").toString();
