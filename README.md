@@ -13,7 +13,7 @@ locations on Windows. That might be fixed in future Qt versions.
 You can read more about running Die Brummbeere on different platforms on its
 project website:
 
-http://pbouda.github.io/brummeere
+http://pbouda.github.io/brummbeere/
 
 
 ## License
