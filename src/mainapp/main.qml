@@ -7,7 +7,7 @@ import "helpers.js" as Helpers
 Window {
     //signal itemSelected(int index)
 
-    property string currentTitle: "TwoMusic"
+    property string currentTitle: "Brummbeere"
     property bool menuActive: false
 
     property var playerMusic:
@@ -15,7 +15,7 @@ Window {
             property int currentAudio: 0
             property var currentPlaylist: []
             onStopped: {
-                if (position > duration) Helpers.next();
+                if (status == MediaPlayer.EndOfMedia) Helpers.next();
             }
         }
 

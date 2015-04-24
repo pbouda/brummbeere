@@ -1,57 +1,63 @@
-import QtQuick 2.4
-import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.1
+import QtQuick 2.0
 
-import "player.js" as PlayerCmd
+import "helpers.js" as Helpers
 
-ColumnLayout {
-    anchors.fill: parent
-    Layout.minimumWidth: 480
-    Layout.minimumHeight: 640
-    Layout.preferredWidth: 480
-    Layout.preferredHeight: 640
+ListView {
 
-    TableView {
+    model: currentFolderModel
 
-        id: currentFolder
-        frameVisible: false
-        headerVisible: false
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        anchors.top: parent.top
-        clip: true
-        model: currentFolderModel
-
-        onClicked: {
-            root.currentFolderName = currentFolderModel.get(row).path;
-            itemSelected(row);
-        }
-
-        TableViewColumn {
-            id: typeColumn
-            title: "Icon"
-            role: "type"
-            movable: false
-            resizable: false
-            width: 70
-        }
-
-        TableViewColumn {
-            id: nameColumn
-            title: "Name"
-            role: "name"
-            movable: false
-            resizable: false
-            width: currentFolder.viewport.width - typeColumn.width
-        }
-
+    Component.onCompleted: {
+        taskbar.source = "qrc:/BrowserPageTaskBar.qml"
     }
 
-    Button {
-        Layout.fillWidth: true
-        anchors.bottom: parent.bottom
-        text: "Play folder"
-        enabled: currentFolderModel.hasAudio
-        onClicked: PlayerCmd.playCurrent()
+    delegate: Rectangle {
+        height: menu.height/10
+        width: menu.width
+        color: "black"
+
+        Rectangle {
+            id: spacer
+            color: "black"
+            height: parent.height
+            width: parent.width*0.05
+        }
+
+        Image {
+            id: listIcon
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: spacer.right
+            source: type == "directory" ? "images/icon_folder.png" : "images/icon_audiofile.png"
+            height: parent.height
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Text {
+            id: listText
+            text: name
+            anchors.left: listIcon.right
+            anchors.leftMargin: parent.width*0.05
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: parent.height*0.6
+            color: "white"
+        }
+
+        Rectangle {
+            width: parent.width
+            height: 1
+            color: "white"
+            anchors.bottom: parent.bottom
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (type === "directory") {
+                    //root.currentTitle = path;
+                    Helpers.loadFolder(path);
+                }
+            }
+        }
+
     }
 }
+

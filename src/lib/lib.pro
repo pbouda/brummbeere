@@ -2,7 +2,7 @@ TEMPLATE = lib
 
 QT += network xml
 
-TARGET = twomusic
+TARGET = brummbeere
 
 CONFIG += staticlib
 

@@ -8,7 +8,7 @@ function play() {
 
 function next() {
     if (root.playerMusic.currentAudio < (root.playerMusic.currentPlaylist.length-1)) {
-        root.playerMusic.stop();
+        //root.playerMusic.stop();
         root.playerMusic.currentAudio++;
         play();
     }

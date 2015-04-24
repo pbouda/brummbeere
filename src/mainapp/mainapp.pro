@@ -1,28 +1,22 @@
 TEMPLATE = app
 
-QT += quick
-!no_desktop: QT += widgets
+QT += quick xml
 
-QT += xml
-
-TARGET = twomusic
+TARGET = brummbeere
 
 SOURCES += main.cpp
 
 INCLUDEPATH += ../lib
 win32 {
-    LIBS += -L../lib/debug -ltwomusic
+    LIBS += -L../lib/debug -lbrummbeere
 } else {
-    LIBS += -L../lib -ltwomusic
+    LIBS += -L../lib -lbrummbeere
 }
 
-RESOURCES += qml.qrc
+RESOURCES += qml.rc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
-
-HEADERS += \
-    qtquickcontrolsapplication.h
