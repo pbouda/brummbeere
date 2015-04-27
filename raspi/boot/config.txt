@@ -1,0 +1,6 @@
+dtoverlay=mz61581,rotate=270
+
+hdmi_cvt=320 480 50 2
+hdmi_group=2
+hdmi_mode=87
+hdmi_force_hotplug=1
