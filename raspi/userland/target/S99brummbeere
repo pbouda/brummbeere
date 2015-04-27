@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+
+export QT_QPA_EGLFS_PHYSICAL_WIDTH=75
+export QT_QPA_EGLFS_PHYSICAL_HEIGHT=50
+export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS="rotate=90"
+export HOME=/root
+
+case "$1" in
+  start)
+	/sbin/modprobe snd-bcm2835
+	/usr/bin/brummbeere
+	/sbin/halt
+	;;
+esac
+
+exit 0
