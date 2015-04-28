@@ -3,10 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Die Brummbeere!
-==========================
+Die Brummbeere
+==============
 
-Die Brummbeere is an ownCloud audio player written for the Qt framework. The application was written for embedded systems in mind, so it features a very simplistic user interface suitable for low resolutions and optimized for low energy consumption. It still runs on Linux and Mac. Windows is currently not supported due to a lack of audio streaming support from password protected locations on Windows. That might be fixed in future Qt versions.
+ownCloud Music Player
+---------------------
+
+.. image:: _static/img/brummbeere_raspi.jpg
+
+Die Brummbeere is an ownCloud audio player based on the Qt framework. The
+application was written for embedded systems in mind, so it features a very
+simplistic user interface suitable for low resolutions and optimized for lo
+energy consumption. It still runs on Linux and Mac. Windows is currently not
+supported due to a lack of audio streaming support from password protected
+locations on Windows. That might be fixed in future Qt versions.
 
 Contents:
 
