@@ -1,5 +1,5 @@
-Compiling
-=========
+Compiling for desktop
+=====================
 
 Prerequisites
 -------------
@@ -12,8 +12,14 @@ http://www.qt.io/download/
 This will in contain all the Qt libraries and the Qt Creator, which we will
 use to compile Die Brummbeere on desktop computers.
 
-Desktop: Windows, Mac and Linux
--------------------------------
+Windows, Mac and Linux
+----------------------
+
+Note: Playing music won't currently work on Windows, due to a missing
+feature in Qt, i.e. streaming audio from password protected URLs. This
+is an `open issue in the Qt bugtracker
+<https://bugreports.qt.io/browse/QTBUG-45363>`_ and might be solved in future
+Qt versions.
 
 On desktop computers Die Brummbeere can be compiled just like any other Qt
 software. You may clone the git repository or just download and unzip the
@@ -40,9 +46,3 @@ by ``make`` in the ``src`` folder:
    $ make
 
 This will create a binary ``brummbeere`` in the ``mainapp`` folder.
-
-
-Raspberry Pi
-------------
-
-TBD
