@@ -13,7 +13,7 @@ Qt library, including support for touchscreens, OpenGL and multimedia.
 
 At the moment, this guide is for the Raspberry Pi 2 only, additional
 explanations for Raspberry B(+) and A will follow soon. You need to run Linux
-to compile your own embedded Linux.
+to compile your own embedded Linux with `buildroot <http://buildroot.net>`_.
 
 As an example for a touchscreen we will use the Tontec 3,5" TFT. It comes with
 a nice case that you can see on the picture above. The TFT is `available on
@@ -55,7 +55,7 @@ the framebuffer of the TFT screen.
 
 First we will update the DTOs of the Raspbian boot partition that was installed
 in the previous step. Mount the partitions of your SD card and check that you
-have a folder `overlays`. We will replace those with the current firmware
+have a folder ``overlays``. We will replace it with the current firmware
 overlays in the Raspberry GitHub repository. Download and unpack the firmware:
 
 .. code-block:: sh
