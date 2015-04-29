@@ -5,11 +5,14 @@ Embedded Brummbeere on the Raspberry
    :align: right
 
 This tutorial shows how to build a custom embedded Linux for the Raspberry
-that runs Die Brummbeere to play audio files from ownCloud. We use the
-Qt Multimedia module and the Linux ALSA sound environment to play back the
-files. This setup can be used to run any other Qt apps on the Raspberry,
-of course. It is a general guide how to boot a minimal system with the latest
-Qt library, including support for touchscreens, OpenGL and multimedia.
+that runs Die Brummbeere to play audio files from ownCloud. The system will
+boot a minimal Linux environemnt with Qt libraries and automatically start
+Die Brummbeere. Optionally, it will load drivers for touchscreens and/or audio
+boards. We use the Qt Multimedia module and the Linux ALSA sound environment to
+play back the files. This setup can be used to run any other Qt apps on the
+Raspberry, of course. It is a general guide how to boot a minimal system with
+the latest Qt library, including support for touchscreens, OpenGL and
+multimedia.
 
 At the moment, this guide is for the Raspberry Pi 2 only, additional
 explanations for Raspberry B(+) and A will follow soon. You need to run Linux
@@ -98,30 +101,66 @@ framebuffer.
 Build Embedded Linux with Die Brummbeere
 ----------------------------------------
 
-Download Raspberry tools
-........................
-
-git clone https://github.com/raspberrypi/tools.git
+In this step we will build a complete Linux system including the kernel, drivers
+and the Qt libraries. The build process depends on buildroot.
 
 
 Buildroot configuration
 .......................
 
-$ git clone https://github.com/pbouda/brummbeere.git
-$ cd brummbeere/raspi
-$ git clone git://git.buildroot.net/buildroot
+First youneed to download Die Brummbeere and buildroot. The Raspberry 2 is only
+supported in the current buildroot git repository, so we clone the current
+buildroot master. The Brummbeere repository contains a skeleton folder ``raspi``
+that we use to clone into. This folder contains scripts and files that buildroot
+will use to build the filesystem for the embedded system:
 
+.. code-block:: sh
+   $ git clone https://github.com/pbouda/brummbeere.git
+   $ cd brummbeere/raspi
+   $ git clone git://git.buildroot.net/buildroot
 
-$ cd buildroot
-$ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig.buildroot
+In the next step we configure buildroot for the Raspberry Pi 2 and a complete
+Qt framework with dependencies like ALSA. The folder ``raspi/buidroot-config``
+contains a buildroot configuration file to set all options that we need. Enter
+the ``buildroot`` folder and load the configuration:
 
+.. code-block:: sh
+
+   $ cd buildroot
+   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig.buildroot
 
 Adding NTP daemon
 .................
 
-$ make busybox-menuconfig
+As the Raspberry does not have a realtime clock, our embedded system start an
+NTP daemon to set the current date and time. Qt will use the date to validate
+the SSL certificate of your ownCloud server, if the connection is encrypted.
+As the embedded system uses buildroot's busybox, we will just add the ``ntpd``
+option to the configuration. Start the menu configuration of busybox:
 
-Networking Utilities -> ntpd
+.. code-block:: sh
+
+   $ make busybox-menuconfig
+
+The choose the option ``Networking Utilities -> ntpd``. Exit and save.
+
+
+Download Raspberry tools
+........................
+
+To be able to add support for device tree overlays in a later step we need
+to download the Raspberry tools. The tools contain a script ``mkknlimg`` that
+adds a trailer to the self-compiled kernel. It also includes a script
+``knlinfo`` that output whether a given kernel contains the trailer for DTO
+support. You can just clone the tools from GitHub. The script that installs
+the root filesystem later expects the script to be located in
+``brummbeere/raspi/tools/mkimage``, so make sure that you clone into the folder
+``brummbeere/raspi``:
+
+.. code-block:: sh
+
+   $ cd ..
+   $ git clone https://github.com/raspberrypi/tools.git
 
 
 Modify installrootfs.sh script
@@ -135,4 +174,6 @@ Add config file for ownCloud
 Start the build process
 .......................
 
-$ make
+.. code-block:: sh
+
+   $ make
