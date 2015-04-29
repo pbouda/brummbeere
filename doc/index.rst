@@ -16,8 +16,13 @@ application was written for embedded systems in mind, so it features a very
 simplistic user interface suitable for low resolutions and optimized for lo
 energy consumption. It still runs on Linux and Mac.
 
-`View on GitHub <https://github.com/pbouda/brummbeere>`_ or `Download .zip
+`View on GitHub <https://github.com/pbouda/brummbeere>`_ || `Download .zip
 <https://github.com/pbouda/brummbeere/zipball/master>`_
+
+Die Brummbeere source code is distributed under the GNU GENERAL PUBLIC LICENSE
+Version 2.
+
+Die Brummbeere documentation is Public Domain.
 
 Contents
 --------
