@@ -95,7 +95,7 @@ support. The output is not rotated, so we get portrait mode.
 The next 4 lines set a custom resolution (we need 320x480 pixels for the
 Tontec screen) and force HDMI hotplug. We need the latter as we want to run
 without any external display on HDMI, but still need HDMI enabled to get OpenGL
-support in Qt and a framebuffer to copy the graphics output the TFT's
+support in Qt and a framebuffer to copy the graphics output to the TFT's
 framebuffer.
 
 
@@ -189,7 +189,7 @@ Add config file for ownCloud
 
 As the current version of Die Brummbeere does not contain an onscreen keyboard,
 you might not be able to edit the URL, user name and password on the Raspberry.
-To set an initial configuration you can create a file ``Hummbeere.conf`` in the
+To set an initial configuration you can create a file ``Brummbeere.conf`` in the
 folder ``raspi/userland/target``. The file has the following content::
 
    url=https://yourownclouddomain.com
@@ -213,4 +213,4 @@ up to a few hours. Just run:
 
    $ make
 
-Good luck and have fun with Die Hummbeere!
+Good luck and have fun with Die Brummbeere!
