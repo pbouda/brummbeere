@@ -24,6 +24,7 @@ Amazon <http://www.amazon.de/gp/product/B00R13OAZ0/ref=as_li_tl?ie=UTF8&camp=163
 for example. It is easily connected to the Raspberry GPIO header and its drivers
 are part of the Raspberry Linux distribution.
 
+.. _prepare_sd_card:
 
 Prepare SD card
 ---------------
@@ -142,7 +143,7 @@ option to the configuration. Start the menu configuration of busybox:
 
    $ make busybox-menuconfig
 
-The choose the option ``Networking Utilities -> ntpd``. Exit and save.
+In the menu choose the option ``Networking Utilities -> ntpd``. Exit and save.
 
 
 Download Raspberry tools
@@ -166,14 +167,50 @@ the root filesystem later expects the script to be located in
 Modify installrootfs.sh script
 ..............................
 
+The script that install the root filesystems needs to know the device of
+your SD card. Please check carefully which device your SD card uses and
+adapt the script in ``raspi/scripts/installrootfs.sh``. Currently the device
+for the SD card is ``/dev/sdc``. Change those device names to your setup
+**in all locations**.
+
+If your SD card is still mounted from step :ref:`prepare_sd_card` you might
+just call ``mount`` to see a list of all filesystems. Find your SD card in this
+list and use the device names that are listed (like ``/dev/sdc1`` and
+``/dev/sdc2``).
+
+**Careful: Your SD card has to prepared with the two Raspberry partitions and
+should be mounted for the following steps. If you do not edit the script
+``installrootfs.sh`` with the correct device names your hard disk might be
+formatted!**
+
 
 Add config file for ownCloud
 ............................
+
+As the current version of Die Brummbeere does not contain an onscreen keyboard,
+you might not be able to edit the URL, user name and password on the Raspberry.
+To set an initial configuration you can create a file ``Hummbeere.conf`` in the
+folder ``raspi/userland/target``. The file has the following content::
+
+   url=https://yourownclouddomain.com
+   user=yourusername
+   password=yourpassword
+
+The file will be copied to the correct location on the root filesystem
+automatically and will be used to access your ownCloud.
 
 
 Start the build process
 .......................
 
+You can now start the build process. This will create Linux, all libraries
+and copy everything to the SD card. If you do not run with root privileges
+the build process will ask for a root password at some later point (when the
+filesystem is copied to the SD card). The whole procedure might take a while,
+up to a few hours. Just run:
+
 .. code-block:: sh
 
    $ make
+
+Good luck and have fun with Die Hummbeere!
