@@ -1,5 +1,5 @@
-Compiling for desktop
-=====================
+Compile for desktop
+===================
 
 Prerequisites
 -------------
