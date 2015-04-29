@@ -11,8 +11,8 @@ ListView {
     }
 
     delegate: Rectangle {
-        height: menu.height/10
-        width: menu.width
+        height: main.height/10
+        width: main.width
         color: "black"
 
         Rectangle {

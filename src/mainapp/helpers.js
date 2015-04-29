@@ -31,6 +31,7 @@ function playCurrent() {
 
 function loadFolder(path) {
     root.currentTitle = path;
+    root.currentPath = path;
     currentFolderModel.loadFromDir(path);
 }
 
@@ -48,5 +49,18 @@ function startAction(name, type) {
         main.source = "qrc:/" + name + ".qml";
     }
     toggleMenu();
+}
+
+function saveSettings() {
+    root.settings.url = main.item.ocUrl.text;
+    root.settings.user = main.item.ocUser.text;
+    root.settings.password = main.item.ocPassword.text;
+}
+
+function initOwncloud() {
+    currentFolderModel.initDav(root.settings.url,
+                               root.settings.user,
+                               root.settings.password);
+    currentFolderModel.loadFromDir("/");
 }
 

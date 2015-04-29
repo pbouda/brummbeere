@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Window 2.2
 import QtMultimedia 5.0
+import Qt.labs.settings 1.0
 
 import "helpers.js" as Helpers
 
@@ -9,6 +10,7 @@ Window {
 
     property string currentTitle: "Brummbeere"
     property bool menuActive: false
+    property string currentPath: "/"
 
     property var playerMusic:
         MediaPlayer {
@@ -17,6 +19,13 @@ Window {
             onStopped: {
                 if (status == MediaPlayer.EndOfMedia) Helpers.next();
             }
+        }
+
+    property var settings:
+        Settings {
+            property string url;
+            property string user;
+            property string password;
         }
 
     id: root

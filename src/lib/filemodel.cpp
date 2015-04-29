@@ -139,10 +139,6 @@ void FileModel::initDav(const QString &davUrl,
 
     mDavClient->initialize(mDavUrl, davUser, davPassword, qtUrl.path());
 
-    QSettings settings("peterbouda.eu", "TwoMusic");
-    settings.setValue("user", davUser);
-    settings.setValue("password", davPassword);
-    settings.setValue("url", davUrl);
     emit davSettingsChanged();
 }
 

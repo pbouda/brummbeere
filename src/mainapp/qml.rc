@@ -12,6 +12,7 @@
         <file>TaskBarButton.qml</file>
         <file>actions.js</file>
         <file>PlayerPageTaskBar.qml</file>
+        <file>SettingsPageTaskBar.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="icon_cancel.png">images/icon_cancel.png</file>
