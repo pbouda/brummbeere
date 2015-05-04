@@ -32,6 +32,7 @@ Contents
 
    compiling
    raspi
+   feedback
 
 
 Indices and tables
