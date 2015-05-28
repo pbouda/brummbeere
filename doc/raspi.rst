@@ -14,9 +14,9 @@ Raspberry, of course. It is a general guide how to boot a minimal system with
 the latest Qt library, including support for touchscreens, OpenGL and
 multimedia.
 
-At the moment, this guide is for the Raspberry Pi 2 only, additional
-explanations for Raspberry B(+) and A will follow soon. You need to run Linux
-to compile your own embedded Linux with `buildroot <http://buildroot.net>`_.
+At the moment, this guide is for the Raspberry Pi 2 and Raspberry A/B(+). You
+need to run Linux to compile your own embedded Linux with `buildroot
+<http://buildroot.net>`_.
 
 As an example for a touchscreen we will use the Tontec 3,5" TFT. It comes with
 a nice case that you can see on the picture above. The TFT is `available on
@@ -128,7 +128,16 @@ the ``buildroot`` folder and load the configuration:
 .. code-block:: sh
 
    $ cd buildroot
-   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig.buildroot
+   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig-raspi2.buildroot
+
+If you want to build Die Brummbeere for Raspberry A/B(+) then choose the "raspi"
+configuration file during this step:
+
+.. code-block:: sh
+
+   $ cd buildroot
+   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig-raspi.buildroot
+
 
 Adding NTP daemon
 .................
