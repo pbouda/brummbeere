@@ -1,0 +1,10 @@
+[Unit]
+Description=Brummbeere
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/brummbeere.sh
+
+[Install]
+WantedBy=brummbeere.target

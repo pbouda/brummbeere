@@ -109,26 +109,27 @@ and the Qt libraries. The build process depends on buildroot.
 Buildroot configuration
 .......................
 
-First youneed to download Die Brummbeere and buildroot. The Raspberry 2 is only
+First you need to download Die Brummbeere and buildroot. The Raspberry 2 is only
 supported in the current buildroot git repository, so we clone the current
 buildroot master. The Brummbeere repository contains a skeleton folder ``raspi``
 that we use to clone into. This folder contains scripts and files that buildroot
 will use to build the filesystem for the embedded system:
 
 .. code-block:: sh
+
    $ git clone https://github.com/pbouda/brummbeere.git
    $ cd brummbeere/raspi
    $ git clone git://git.buildroot.net/buildroot
 
 In the next step we configure buildroot for the Raspberry Pi 2 and a complete
 Qt framework with dependencies like ALSA. The folder ``raspi/buidroot-config``
-contains a buildroot configuration file to set all options that we need. Enter
+contains  buildroot configuration files to set all options that we need. Enter
 the ``buildroot`` folder and load the configuration:
 
 .. code-block:: sh
 
    $ cd buildroot
-   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig-raspi2.buildroot
+   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeere-raspi2.config
 
 If you want to build Die Brummbeere for Raspberry A/B(+) then choose the "raspi"
 configuration file during this step:
@@ -136,7 +137,7 @@ configuration file during this step:
 .. code-block:: sh
 
    $ cd buildroot
-   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeereconfig-raspi.buildroot
+   $ make defconfig BR2_DEFCONFIG=../buildroot-config/brummbeer-raspi.config
 
 
 Adding NTP daemon

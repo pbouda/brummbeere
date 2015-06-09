@@ -29,3 +29,5 @@ ui_*.h
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
+
+doc/_build

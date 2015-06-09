@@ -1,0 +1,4 @@
+[Unit]
+Description=Brummbeere application
+Wants=multi-user.target network-online.target
+After=multi-user.target network-online.target

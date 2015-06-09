@@ -1,10 +1,23 @@
 #!/bin/bash
 
-echo "Start network..."
-install -m 755 ../userland/target/S41udhcpc $1/etc/init.d/
-install -m 755 ../userland/target/S52ntp $1/etc/init.d/
-install -m 755 ../userland/target/S90fbcp $1/etc/init.d/
-install -m 755 ../userland/target/S99brummbeere $1/etc/init.d/
+echo "Install binary firmware..."
+mkdir -p $1/lib/firmware/rtlwifi/
+install ../userland/target/rtl8188eufw.bin $1/lib/firmware/rtlwifi/
+
+echo "Install wpa_supplicant config..."
+mkdir -p $1/etc/wpa_supplicant/
+install ../userland/target/wpa_supplicant-wlan0.conf $1/etc/wpa_supplicant/
+install ../userland/target/00-wlan0-dhcp.network $1/etc/systemd/network/
+
+echo "Install systemd targets and services..."
+mkdir -p $1/etc/systemd/system/brummbeere.target.wants/
+install ../userland/target/brummbeere.target $1/etc/systemd/system/
+install ../userland/target/brummbeere.service $1/etc/systemd/system/
+install -m 755 ../userland/target/brummbeere.sh $1/usr/bin/
+
+ln -fs ../brummbeere.service $1/etc/systemd/system/brummbeere.target.wants/brummbeere.service
+ln -fs ../../../../lib/systemd/system/systemd-modules-load.service $1/etc/systemd/system/multi-user.target.wants/systemd-modules-load.service
+ln -fs ../../../../usr/lib/systemd/system/wpa_supplicant@.service $1/etc/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service
 
 echo "Copy config..."
 mkdir -p $1/root/.config/Brummbeere/
