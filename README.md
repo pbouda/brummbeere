@@ -21,6 +21,6 @@ http://brummbeere.readthedocs.org
 ## License
 
 Die Brummbeere source code is distributed under the GNU GENERAL PUBLIC LICENSE
-Version 2.
+Version 3.
 
 Die Brummbeere documentation is Public Domain.
