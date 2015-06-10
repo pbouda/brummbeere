@@ -20,7 +20,7 @@ energy consumption. It still runs on Linux and Mac.
 <https://github.com/pbouda/brummbeere/zipball/master>`_
 
 Die Brummbeere source code is distributed under the GNU GENERAL PUBLIC LICENSE
-Version 2.
+Version 3.
 
 Die Brummbeere documentation is Public Domain.
 
