@@ -11,9 +11,11 @@ ownCloud Music Player
 
 .. image:: _static/img/brummbeere_raspi.jpg
 
+`Watch Die Brummbeere in action <http://www.peterbouda.eu/video-die-brummbeere-in-action.html>`_
+
 Die Brummbeere is an ownCloud audio player based on the Qt framework. The
 application was written for embedded systems in mind, so it features a very
-simplistic user interface suitable for low resolutions and optimized for lo
+simplistic user interface suitable for low resolutions and optimized for low
 energy consumption. It still runs on Linux and Mac.
 
 `View on GitHub <https://github.com/pbouda/brummbeere>`_ || `Download .zip
