@@ -24,15 +24,20 @@ Qt versions.
 On desktop computers Die Brummbeere can be compiled just like any other Qt
 software. You may clone the git repository or just download and unzip the
 `current master branch
-<https://github.com/pbouda/brummbeere/archive/master.zip>`_.
+<https://github.com/pbouda/brummbeere/archive/master.zip>`_. When you clone
+you have to pull in all submodules (currently Die Brummbeere uses the 
+project `beere-qml-components
+<https://github.com/pbouda/beere-qml-components>`_).
 On Mac or Linux just open a shell and type:
 
 .. code-block:: sh
 
-   $ wget https://github.com/pbouda/brummbeere/archive/master.zip
-   $ unzip master.zip
+   $ git clone https://github.com/pbouda/brummbeere
+   $ cd brummbeere
+   $ git submodule init
+   $ git submodule update
 
-This will create a folder named ``brummbeere-master``, which contains a folder
+This will create a folder named ``brummbeere``, which contains a folder
 ``src`` with the code of Die Brummbeere. Just open the project file
 ``Brummbeere.pro`` in the Qt Creator and build and run the project.
 
@@ -41,7 +46,7 @@ by ``make`` in the ``src`` folder:
 
 .. code-block:: sh
 
-   $ cd brummbeere-master/src
+   $ cd src
    $ qmake Brummbeere.pro
    $ make
 

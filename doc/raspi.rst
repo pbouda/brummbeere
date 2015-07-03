@@ -118,7 +118,10 @@ will use to build the filesystem for the embedded system:
 .. code-block:: sh
 
    $ git clone https://github.com/pbouda/brummbeere.git
-   $ cd brummbeere/raspi
+   $ cd brummbeere
+   $ git submodule init
+   $ git submodule update
+   $ cd raspi
    $ git clone git://git.buildroot.net/buildroot
 
 In the next step we configure buildroot for the Raspberry Pi 2 and a complete

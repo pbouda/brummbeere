@@ -12,11 +12,8 @@ Mail
 My mail address is pbouda at outlook dot com.
 
 
-Chat
-----
+IRC
+---
 
-There is a chat room for Die Brummbeere on gitter.im:
-
-https://gitter.im/pbouda/brummbeere
-
-All you need is a GitHub account.
+My IRC name is `pbouda`, you can normally find me on #qt and #buildroot on
+Freenode.
