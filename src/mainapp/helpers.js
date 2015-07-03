@@ -30,7 +30,7 @@ function playCurrent() {
 }
 
 function loadFolder(path) {
-    root.currentTitle = path;
+    root.title = path;
     root.currentPath = path;
     currentFolderModel.loadFromDir(path);
 }

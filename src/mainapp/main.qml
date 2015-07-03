@@ -5,11 +5,9 @@ import Qt.labs.settings 1.0
 
 import "helpers.js" as Helpers
 
-Window {
-    //signal itemSelected(int index)
+RootWindow {
+    title: "Hummbeere"
 
-    property string currentTitle: "Brummbeere"
-    property bool menuActive: false
     property string currentPath: "/"
 
     property var playerMusic:
@@ -28,41 +26,5 @@ Window {
             property string password;
         }
 
-    id: root
-    visible: true
-    color: "black"
-
-    Loader {
-        id: main
-        anchors.top: titlebar.bottom
-        anchors.bottom: taskbar.top
-        width: parent.width
-        source: "qrc:/BrowserPage.qml"
-        visible: !menuActive
-    }
-
-    TitleBar {
-        id: titlebar
-        anchors.top: parent.top
-        width: parent.width
-        height: 0.12*parent.height
-
-    }
-
-    Menu {
-        id: menu
-        anchors.top: titlebar.bottom
-        anchors.bottom: taskbar.top
-        width: parent.width
-        visible: menuActive
-
-    }
-
-    Loader {
-        id: taskbar
-        anchors.bottom: parent.bottom
-        width: parent.width
-        height: 0.12*parent.height
-    }
-
+    Component.onCompleted: currentPage = "qrc:/BrowserPage.qml"
 }

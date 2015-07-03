@@ -1,18 +1,19 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>TitleBar.qml</file>
+        <file alias="RootWindow.qml">../../beere-qml-components/RootWindow.qml</file>
+        <file alias="TaskBarButton.qml">../../beere-qml-components/TaskBarButton.qml</file>
+        <file alias="TitleBar.qml">../../beere-qml-components/TitleBar.qml</file>
+        <file alias="Menu.qml">../../beere-qml-components/Menu.qml</file>
+        <file alias="actions.js">../../beere-qml-components/actions.js</file>
         <file>BrowserPageTaskBar.qml</file>
-        <file>Menu.qml</file>
         <file>MenuContent.qml</file>
-        <file>helpers.js</file>
         <file>BrowserPage.qml</file>
         <file>PlayerPage.qml</file>
         <file>SettingsPage.qml</file>
-        <file>TaskBarButton.qml</file>
-        <file>actions.js</file>
         <file>PlayerPageTaskBar.qml</file>
         <file>SettingsPageTaskBar.qml</file>
+        <file>helpers.js</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="icon_cancel.png">images/icon_cancel.png</file>
