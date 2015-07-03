@@ -1,0 +1,3 @@
+[submodule "beere-qml-components"]
+	path = beere-qml-components
+	url = https://github.com/pbouda/beere-qml-components.git
